@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Cálculo Integral - UTP</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f7f6; color: #333; }
+        header { background: #1e3a8a; color: white; text-align: center; padding: 1.5rem; }
+        .container { max-width: 1000px; margin: auto; padding: 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .card { background: white; border-radius: 8px; padding: 1rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card.disabled { background: #e2e8f0; color: #64748b; }
+        .badge { background: #2563eb; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+        section { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; }
+        #plot { width: 100%; height: 350px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plataforma de Cálculo Integral - Fase 1</h1>
+        <p>Universidad Tecnológica de Pereira</p>
+    </header>
+
+    <div class="container">
+        <h2>Módulos del Proyecto (14 Módulos)</h2>
+        <div class="grid">
+            <div class="card"><h3>M1</h3><p>Riemann</p><span class="badge">Fase 1</span></div>
+            <div class="card"><h3>M2</h3><p>Trapecio</p><span class="badge">Fase 1</span></div>
+            <div class="card"><h3>M3</h3><p>Punto Medio</p><span class="badge">Fase 1</span></div>
+            <div class="card"><h3>M4</h3><p>Simpson</p><span class="badge">Fase 1</span></div>
+            <div class="card"><h3>M5</h3><p>Área / Integral</p><span class="badge">Fase 1</span></div>
+            <div class="card"><h3>M6</h3><p>Int. Directa</p><span class="badge">Fase 1</span></div>
+            <div class="card disabled"><h3>M7-M14</h3><p>Próximamente</p><span>Fase 2/3</span></div>
+        </div>
+
+        <section>
+            <h2>Módulo 1: Sumas de Riemann (Demostración Interactiva)</h2>
+            <p>Aproximación del área bajo $f(x) = x^2$ en $[0, 2]$:</p>
+            <label>Subintervalos ($n$): </label>
+            <input type="number" id="nVal" value="4" min="1" max="30" onchange="actualizar()">
+            <div id="plot"></div>
+        </section>
+    </div>
+
+    <script>
+        function actualizar() {
+            let n = parseInt(document.getElementById('nVal').value);
+            let xCurve = [], yCurve = [];
+            for(let x=0; x<=2; x+=0.05) { xCurve.push(x); yCurve.push(x*x); }
+            
+            let dx = 2/n, xBars = [], yBars = [];
+            for(let i=0; i<n; i++) {
+                let x = (i+1)*dx;
+                xBars.push(i*dx + dx/2);
+                yBars.push(x*x);
+            }
+            Plotly.newPlot('plot', [
+                {x: xCurve, y: yCurve, name: 'f(x) = x²'},
+                {x: xBars, y: yBars, type: 'bar', width: dx, opacity: 0.5, name: 'Suma Derecha'}
+            ], {title: 'Aproximación de Riemann'});
+        }
+        document.addEventListener('DOMContentLoaded', actualizar);
+    </script>
+</body>
+</html>
