@@ -2,76 +2,122 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plataforma de Cálculo Integral - Fase 1</title>
+<title>Plataforma de Cálculo Integral · UTP</title>
 <style>
-:root{--bg:#f4f6f8;--surface:#ffffff;--primary:#1e40af;--primary-light:#eff6ff;--text-main:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--badge-bg:#dbeafe;--badge-text:#1d4ed8;--radius:16px;--shadow:0 4px 12px rgba(0,0,0,0.05)}
+:root{--bg:#f1f5f9;--surface:#ffffff;--primary:#1e3a8a;--primary-mid:#2563eb;--primary-light:#eff6ff;--text-main:#0f172a;--text-muted:#475569;--border:#cbd5e1;--badge-bg:#dbeafe;--badge-text:#1e40af;--radius:16px;--shadow:0 4px 14px rgba(15,23,42,0.06)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:50px}
-.hero-header{background:var(--primary);color:#fff;text-align:center;padding:36px 20px;margin-bottom:24px;box-shadow:var(--shadow);cursor:pointer}
-.hero-header h1{font-size:22px;font-weight:800;margin-bottom:8px;line-height:1.3}
-.hero-header p{font-size:13.5px;opacity:0.9}
-.container{max-width:780px;margin:0 auto;padding:0 16px}
-.section-title{font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:14px}
+.hero-header{background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 100%);color:#fff;text-align:center;padding:38px 20px;margin-bottom:24px;box-shadow:var(--shadow);cursor:pointer}
+.hero-header h1{font-size:23px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px}
+.hero-header p{font-size:14px;opacity:0.92}
+.container{max-width:860px;margin:0 auto;padding:0 16px}
+.section-title{font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:12px}
 .search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
-.modules-list{display:flex;flex-direction:column;gap:12px}
-.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
-.module-card:hover{transform:translateY(-2px);border-color:var(--primary)}
-.module-num{font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
-.module-title{font-size:19px;font-weight:700;color:var(--text-main);margin-bottom:12px}
-.badge-fase{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;display:inline-block}
+.search-input:focus{border-color:var(--primary-mid)}
+.modules-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
+.module-card:hover{transform:translateY(-3px);border-color:var(--primary-mid)}
+.module-num{font-size:12.5px;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.module-title{font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:12px}
+.badge-status{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;display:inline-block}
 #detail-view{display:none}
-.detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);border:none;padding:8px 14px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer;margin-bottom:18px}
-.formula-box{background:#f8fafc;border-left:4px solid var(--primary);padding:14px;border-radius:8px;font-family:monospace;font-size:14.5px;color:var(--primary);margin:14px 0;overflow-x:auto}
-.section-h3{font-size:15px;font-weight:700;margin:16px 0 6px;color:var(--text-main)}
-.tool-panel{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:16px}
-.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
-.control-group label{display:block;font-size:11.5px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
-.control-group select,.control-group input{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13px}
-canvas{width:100%;max-height:260px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:10px 0}
-.result-banner{background:var(--primary);color:#fff;padding:10px 14px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:10px}
-table.formula-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
-table.formula-table th,table.formula-table td{border:1px solid var(--border);padding:8px;text-align:left}
-table.formula-table th{background:var(--primary-light);color:var(--primary)}
-.step-list{padding-left:18px;margin-top:6px;font-size:13.5px}
-.step-list li{margin-bottom:4px}
-footer{text-align:center;margin-top:30px;font-size:12.5px;color:var(--text-muted)}
+.detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);border:none;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;margin-bottom:18px}
+.formula-box{background:#f8fafc;border-left:4px solid var(--primary-mid);padding:14px 16px;border-radius:8px;font-family:"Courier New",monospace;font-size:14.5px;font-weight:700;color:var(--primary);margin:12px 0;overflow-x:auto}
+.section-h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--text-main);border-bottom:1px solid #e2e8f0;padding-bottom:4px}
+.lab-panel{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:18px}
+.lab-header{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:14px}
+.control-group label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
+.control-group select,.control-group input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13.5px;font-weight:600}
+canvas{width:100%;height:280px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:12px 0}
+.legend-bar{display:flex;gap:16px;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;flex-wrap:wrap}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.result-banner{background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:10px}
+.dynamic-steps{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:13.5px}
+.dynamic-steps h4{font-size:13.5px;color:var(--primary);margin-bottom:8px}
+.step-list{padding-left:20px;font-size:14px}
+.step-list li{margin-bottom:6px}
+footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
 </style>
 </head>
 <body>
 <div class="hero-header" onclick="showHome()">
-  <h1>Plataforma de Cálculo Integral - Fase 1</h1>
-  <p>Universidad Tecnológica de Pereira</p>
+  <h1>Plataforma de Cálculo Integral</h1>
+  <p>Universidad Tecnológica de Pereira &middot; Laboratorio Interactivo</p>
 </div>
 <main class="container">
   <div id="home-view">
     <div class="section-title">Módulos del Proyecto (14 Módulos)</div>
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo (ej: Riemann, Trapecio, Simpson)..." onkeyup="filterModules()">
+    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo o método (ej: Riemann, Simpson, Sustitución, Partes)..." onkeyup="filterModules()">
     <div class="modules-list" id="modulesContainer"></div>
   </div>
   <div id="detail-view">
-    <button class="back-btn" onclick="showHome()">&larr; Volver a los módulos</button>
+    <button class="back-btn" onclick="showHome()">&larr; Volver a los 14 Módulos</button>
     <div class="detail-box" id="detailContent"></div>
   </div>
-  <footer>Universidad Tecnológica de Pereira &middot; 14 Módulos Interactivos</footer>
+  <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; 14 Módulos Interactivos</footer>
 </main>
-<script>
-const modulesData=[
-{id:1,num:"M1",title:"Riemann",desc:"Suma izquierda, derecha y punto medio: la aproximación del área como límite.",tags:["aproximación","límite","particiones"],formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ],   donde Δx = (b - a) / n",theory:"Las sumas de Riemann permiten aproximar el área bajo una curva f(x) en un intervalo cerrado [a, b] dividiéndolo en n subintervalos de ancho Δx.",example:["Sea f(x) = x² en [0, 2] con n = 4 subintervalos.","Ancho de cada rectángulo: Δx = (2 - 0) / 4 = 0.5.","Suma derecha: 0.5 · [f(0.5) + f(1.0) + f(1.5) + f(2.0)] = 3.75.","Valor exacto: ∫₀² x² dx = 8/3 ≈ 2.6667."],toolType:"numeric",defaultMethod:"riemann-left"},
-{id:2,num:"M2",title:"Trapecio",desc:"Aproximación con trapecios y su justificación geométrica.",tags:["cuadratura","trapecios"],formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + ... + 2f(x_{n-1}) + f(x_n) ]",theory:"Une los puntos consecutivos de la curva mediante segmentos rectos, formando trapecios cuya área promedio reduce notablemente el error.",example:["Aproximar ∫₀² x² dx con n = 4 trapecios (Δx = 0.5).","T₄ = 0.25 · [0 + 2(0.25) + 2(1) + 2(2.25) + 4] = 2.75."],toolType:"numeric",defaultMethod:"trapezoid"},
-{id:3,num:"M3",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",tags:["cuadratura","rectángulos"],formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa la altura en el centro geométrico de cada subintervalo logrando mayor precisión.",example:["Aproximar ∫₀² x² dx con n = 4 (Δx = 0.5). Puntos medios: 0.25, 0.75, 1.25, 1.75. M₄ = 2.625."],toolType:"numeric",defaultMethod:"midpoint"},
-{id:4,num:"M4",title:"Regla de Simpson",desc:"Parábolas ajustadas por tramos y la condición de n par.",tags:["cuadratura","parábolas"],formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + ... + f(x_n) ]   (n par)",theory:"Reemplaza los segmentos lineales por arcos parabólicos que pasan por tres puntos consecutivos.",example:["Aproximar ∫₀² x² dx con n = 4 (par). S₄ = (1/6) · 16 = 2.6667 (exacto)."],toolType:"numeric",defaultMethod:"simpson"},
-{id:5,num:"M5",title:"Integral Definida y Área",desc:"Teorema Fundamental del Cálculo y área entre curvas.",tags:["TFC","área"],formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A_entre = ∫_a^b [ f(x) - g(x) ] dx",theory:"Conecta la derivación con la integración y permite calcular áreas netas entre funciones.",example:["Área entre f(x) = 4 - x² y g(x) = x² en [-√2, √2] es (16/3)√2 ≈ 7.5425 u²."],toolType:"area"},
-{id:6,num:"M6",title:"Integración Directa",desc:"Compendio de fórmulas básicas y relación entre f(x) y F(x).",tags:["antiderivadas","fórmulas"],formula:"∫ x^n dx = x^{n+1} / (n + 1) + C   (n ≠ -1)",theory:"Busca la familia de primitivas F(x) + C cuya derivada reproduce f(x).",example:["Calcular ∫ (5x⁴ - 3x² + 7) dx = x⁵ - x³ + 7x + C."],toolType:"table"},
-{id:7,num:"M7",title:"Sustitución / Potencias",desc:"Método de sustitución y la regla de la potencia generalizada.",tags:["sustitución"],formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du,   donde u = g(x)",theory:"Es la regla de la cadena en sentido inverso mediante el cambio de variable u = g(x).",example:["Resolver ∫ 2x · (x² + 3)⁵ dx = (x² + 3)⁶ / 6 + C."],toolType:"check"},
-{id:8,num:"M8",title:"Integrales Exponenciales",desc:"Integrales con base e y bases arbitrarias.",tags:["exponencial"],formula:"∫ e^u du = e^u + C   |   ∫ a^u du = a^u / ln(a) + C",theory:"La función exponencial natural es invariante; para bases a ≠ 1 se divide por ln(a).",example:["Resolver ∫ (e^{3x} + 2^x) dx = (1/3)e^{3x} + 2^x / ln(2) + C."],toolType:"check"},
-{id:9,num:"M9",title:"Integrales Logarítmicas",desc:"Formas que conducen al logaritmo natural.",tags:["logaritmo"],formula:"∫ (1 / u) du = ln|u| + C   |   ∫ (f'(x) / f(x)) dx = ln|f(x)| + C",theory:"Cuando el numerador es la derivada del denominador, la antiderivada es el logaritmo natural.",example:["Resolver ∫ (4x / (x² + 5)) dx = 2 · ln(x² + 5) + C."],toolType:"check"},
-{id:10,num:"M10",title:"Integrales Trigonométricas",desc:"Potencias y productos de funciones trigonométricas.",tags:["trigonometría"],formula:"sen²(x) + cos²(x) = 1   |   sen²(x) = (1 - cos(2x))/2",theory:"Se usan identidades pitagóricas y de ángulo medio para simplificar productos trigonométricos.",example:["Resolver ∫ sen³(x) · cos²(x) dx = -cos³(x)/3 + cos⁵(x)/5 + C."],toolType:"check"},
-{id:11,num:"M11",title:"Trigonométricas Inversas",desc:"Formas que producen arcsen, arctan y arcsec.",tags:["inversas"],formula:"∫ du/√(a² - u²) = arcsen(u/a) + C   |   ∫ du/(a² + u²) = (1/a)arctan(u/a) + C",theory:"Expresiones cuadráticas en el denominador conducen directamente a arcsen o arctan.",example:["Resolver ∫ dx / (9 + 4x²) = (1/6) arctan(2x / 3) + C."],toolType:"check"},
-{id:12,num:"M12",title:"Hiperbólicas Inversas",desc:"Integrales asociadas a arcsinh, arccosh y arctanh.",tags:["hiperbólicas"],formula:"∫ du/√(u² + a²) = arcsinh(u/a) + C",theory:"Alternativa elegante para raíces de sumas o diferencias de cuadrados.",example:["Resolver ∫ dx / √(x² + 16) = arcsinh(x / 4) + C."],toolType:"check"},
-{id:13,num:"M13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados para integrandos cuadráticos.",tags:["trinomio"],formula:"ax² + bx + c = a(x + b / 2a)² + (c - b² / 4a)",theory:"Se completa el trinomio cuadrado perfecto para reducirlo a formas estándar u² ± a².",example:["x² + 6x + 13 = (x + 3)² + 2² → (1/2) arctan((x + 3) / 2) + C."],toolType:"square-completer"},
-{id:14,num:"M14",title:"Integración por Partes",desc:"La fórmula ∫u dv = uv - ∫v du y la estrategia LIATE.",tags:["por partes"],formula:"∫ u dv = u · v - ∫ v du",theory:"Permite integrar productos usando la prioridad LIATE para elegir u.",example:["Resolver ∫ x · e^x dx = e^x(x - 1) + C."],toolType:"liate"}
-];
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plataforma de Cálculo Integral · UTP</title>
+<style>
+:root{--bg:#f1f5f9;--surface:#ffffff;--primary:#1e3a8a;--primary-mid:#2563eb;--primary-light:#eff6ff;--text-main:#0f172a;--text-muted:#475569;--border:#cbd5e1;--badge-bg:#dbeafe;--badge-text:#1e40af;--radius:16px;--shadow:0 4px 14px rgba(15,23,42,0.06)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:50px}
+.hero-header{background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 100%);color:#fff;text-align:center;padding:38px 20px;margin-bottom:24px;box-shadow:var(--shadow);cursor:pointer}
+.hero-header h1{font-size:23px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px}
+.hero-header p{font-size:14px;opacity:0.92}
+.container{max-width:860px;margin:0 auto;padding:0 16px}
+.section-title{font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:12px}
+.search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
+.search-input:focus{border-color:var(--primary-mid)}
+.modules-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
+.module-card:hover{transform:translateY(-3px);border-color:var(--primary-mid)}
+.module-num{font-size:12.5px;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.module-title{font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:12px}
+.badge-status{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;display:inline-block}
+#detail-view{display:none}
+.detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);border:none;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;margin-bottom:18px}
+.formula-box{background:#f8fafc;border-left:4px solid var(--primary-mid);padding:14px 16px;border-radius:8px;font-family:"Courier New",monospace;font-size:14.5px;font-weight:700;color:var(--primary);margin:12px 0;overflow-x:auto}
+.section-h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--text-main);border-bottom:1px solid #e2e8f0;padding-bottom:4px}
+.lab-panel{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:18px}
+.lab-header{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:14px}
+.control-group label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
+.control-group select,.control-group input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13.5px;font-weight:600}
+canvas{width:100%;height:280px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:12px 0}
+.legend-bar{display:flex;gap:16px;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;flex-wrap:wrap}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.result-banner{background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:10px}
+.dynamic-steps{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:13.5px}
+.dynamic-steps h4{font-size:13.5px;color:var(--primary);margin-bottom:8px}
+.step-list{padding-left:20px;font-size:14px}
+.step-list li{margin-bottom:6px}
+footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
+</style>
+</head>
+<body>
+<div class="hero-header" onclick="showHome()">
+  <h1>Plataforma de Cálculo Integral</h1>
+  <p>Universidad Tecnológica de Pereira &middot; Laboratorio Interactivo</p>
+</div>
+<main class="container">
+  <div id="home-view">
+    <div class="section-title">Módulos del Proyecto (14 Módulos)</div>
+    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo o método (ej: Riemann, Simpson, Sustitución, Partes)..." onkeyup="filterModules()">
+    <div class="modules-list" id="modulesContainer"></div>
+  </div>
+  <div id="detail-view">
+    <button class="back-btn" onclick="showHome()">&larr; Volver a los 14 Módulos</button>
+    <div class="detail-box" id="detailContent"></div>
+  </div>
+  <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; 14 Módulos Interactivos</footer>
+</main>
 const container=document.getElementById("modulesContainer");
 function renderModules(list){
   container.innerHTML="";
@@ -79,11 +125,7 @@ function renderModules(list){
     const card=document.createElement("div");
     card.className="module-card";
     card.onclick=()=>openModule(mod.id);
-    card.innerHTML=`
-      <div class="module-num">${mod.num}</div>
-      <h2 class="module-title">${mod.title}</h2>
-      <span class="badge-fase">Fase 1</span>
-    `;
+    card.innerHTML=`<div class="module-num">${mod.num}</div><h2 class="module-title">${mod.title}</h2><span class="badge-status">Simulador Activo</span>`;
     container.appendChild(card);
   });
 }
@@ -100,65 +142,144 @@ function openModule(id){
   const mod=modulesData.find(m=>m.id===id);if(!mod)return;
   document.getElementById("home-view").style.display="none";
   document.getElementById("detail-view").style.display="block";
-  let tool="";
-  if(mod.toolType==="numeric"){tool=`<div class="tool-panel"><strong>Simulador Gráfico</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>Función f(x)</label><select id="fnSelect" onchange="updateNumericPlot()"><option value="x2">f(x) = x²</option><option value="sin">f(x) = sen(x) + 1.5</option><option value="cub">f(x) = 0.5x³ - x + 2</option></select></div><div class="control-group"><label>Método</label><select id="methodSelect" onchange="updateNumericPlot()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3</option></select></div><div class="control-group"><label>Particiones n: <span id="nVal">6</span></label><input type="range" id="nSlider" min="2" max="20" step="2" value="6" oninput="document.getElementById('nVal').innerText=this.value;updateNumericPlot()"></div></div><canvas id="plotCanvas" width="700" height="250"></canvas><div class="result-banner"><span>Aprox: <strong id="approxOut">0.00</strong></span><span>Exacta: <strong id="exactOut">0.00</strong></span><span>Error: <strong id="errOut">0.00</strong></span></div></div>`;}
-  else if(mod.toolType==="area"){tool=`<div class="tool-panel"><strong>Visualizador de Área</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>Límite a</label><input type="number" id="limA" value="-1.41" step="0.1" onchange="drawAreaBetween()"></div><div class="control-group"><label>Límite b</label><input type="number" id="limB" value="1.41" step="0.1" onchange="drawAreaBetween()"></div></div><canvas id="areaCanvas" width="700" height="240"></canvas><div class="result-banner"><span>Área = <strong id="areaBetweenOut">7.54</strong> u²</span></div></div>`;}
-  else if(mod.toolType==="table"){tool=`<div class="tool-panel"><strong>Fórmulas Inmediatas</strong><table class="formula-table"><thead><tr><th>f(x)</th><th>F(x) + C</th></tr></thead><tbody><tr><td>k</td><td>k·x</td></tr><tr><td>x^n</td><td>x^(n+1)/(n+1)</td></tr><tr><td>1/x</td><td>ln|x|</td></tr><tr><td>e^x</td><td>e^x</td></tr><tr><td>sen(x)</td><td>-cos(x)</td></tr></tbody></table></div>`;}
-  else if(mod.toolType==="square-completer"){tool=`<div class="tool-panel"><strong>Completar Cuadrados</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>a</label><input type="number" id="sqA" value="1" oninput="calcSquare()"></div><div class="control-group"><label>b</label><input type="number" id="sqB" value="6" oninput="calcSquare()"></div><div class="control-group"><label>c</label><input type="number" id="sqC" value="13" oninput="calcSquare()"></div></div><div class="formula-box" id="sqResult">1(x + 3)² + 4</div></div>`;}
-  else if(mod.toolType==="liate"){tool=`<div class="tool-panel"><strong>Estrategia LIATE</strong><select id="liateSelect" class="search-input" style="margin-top:6px;" onchange="updateLiate()"><option value="0">∫ x · ln(x) dx</option><option value="1">∫ x² · sen(x) dx</option><option value="2">∫ arctan(x) dx</option></select><div class="formula-box" id="liateOut">u = ln(x) → du = (1/x)dx | dv = x dx → v = x²/2</div></div>`;}
-  else{tool=`<div class="tool-panel"><strong>Verificación</strong><p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Deriva tu resultado para comprobar que d/dx[F(x)] = f(x).</p></div>`;}
-  
+  let labHTML="";
+  if(mod.labMode==="numeric"){
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio Interactivo de Aproximación y Error</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Función f(x)</label><select id="fnSel" onchange="runNumericLab()"><option value="x2">f(x) = x²</option><option value="x3">f(x) = 0.5x³ + 1</option><option value="sin">f(x) = 2·sen(x) + 2</option><option value="exp">f(x) = e^(0.5x)</option></select></div>
+      <div class="control-group"><label>Método Numérico</label><select id="methSel" onchange="runNumericLab()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3 (n par)</option></select></div>
+      <div class="control-group"><label>Límite inferior (a)</label><input type="number" id="numA" value="0" step="0.5" onchange="runNumericLab()"></div>
+      <div class="control-group"><label>Límite superior (b)</label><input type="number" id="numB" value="2" step="0.5" onchange="runNumericLab()"></div>
+      <div class="control-group"><label>Particiones n: <span id="nLbl">6</span></label><input type="range" id="nRange" min="2" max="24" step="2" value="6" oninput="document.getElementById('nLbl').innerText=this.value;runNumericLab()"></div>
+    </div>
+    <div class="legend-bar"><span><i class="dot" style="background:#d97706"></i>Curva f(x)</span><span><i class="dot" style="background:#2563eb"></i>Aproximación geométrica</span></div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Aproximación: <strong id="outApprox">0</strong></span><span>Integral Exacta: <strong id="outExact">0</strong></span><span>Error Absoluto: <strong id="outErr">0</strong></span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }else if(mod.labMode==="area"){
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio de Área entre Curvas: f(x) = k - x² y g(x) = x²</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Altura parábola (k)</label><input type="number" id="areaK" value="4" min="1" max="9" step="0.5" onchange="runAreaLab()"></div>
+      <div class="control-group"><label>Límite a</label><input type="number" id="areaA" value="-1.41" step="0.1" onchange="runAreaLab()"></div>
+      <div class="control-group"><label>Límite b</label><input type="number" id="areaB" value="1.41" step="0.1" onchange="runAreaLab()"></div>
+    </div>
+    <div class="legend-bar"><span><i class="dot" style="background:#1e3a8a"></i>f(x) = k - x²</span><span><i class="dot" style="background:#d97706"></i>g(x) = x²</span><span><i class="dot" style="background:rgba(37,99,235,0.3)"></i>Área encerrada</span></div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Área Total = <strong id="outArea">0</strong> u²</span><span>F(b) - F(a) Evaluado</span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }else{
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio Simbólico y Gráfico: Integrando f(x) vs Primitiva F(x)</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Parámetro Principal (a / k)</label><input type="number" id="symA" value="2" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>Parámetro Secundario (b / n)</label><input type="number" id="symB" value="3" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>Límite inferior x₀</label><input type="number" id="symX0" value="0" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>Límite superior x₁</label><input type="number" id="symX1" value="2" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
+    </div>
+    <div class="legend-bar"><span><i class="dot" style="background:#1e3a8a"></i>Integrando f(x) (Área sombreada)</span><span><i class="dot" style="background:#059669"></i>Antiderivada F(x)</span></div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Primitiva: <strong id="outPrim">F(x) + C</strong></span><span>Integral Definida [x₀, x₁]: <strong id="outDef">0</strong></span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }
   document.getElementById("detailContent").innerHTML=`
     <div class="module-num">${mod.num}</div>
-    <h2 class="module-title" style="font-size:22px;">${mod.title}</h2>
-    <span class="badge-fase" style="margin-bottom:14px;">Fase 1</span>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">${mod.desc}</p>
-    <h3 class="section-h3">Fórmula</h3>
+    <h2 class="module-title" style="font-size:23px;">${mod.title}</h2>
+    <p style="font-size:14.5px;color:var(--text-muted);margin-bottom:10px;">${mod.desc}</p>
+    <h3 class="section-h3">Modelo Matemático</h3>
     <div class="formula-box">${mod.formula}</div>
-    <h3 class="section-h3">Teoría</h3>
-    <p style="font-size:14px;">${mod.theory}</p>
-    <h3 class="section-h3">Ejemplo Paso a Paso</h3>
-    <ol class="step-list">${mod.example.map(s=>`<li>${s}</li>`).join("")}</ol>
-    ${tool}
+    <h3 class="section-h3">Fundamento Teórico</h3>
+    <p style="font-size:14.5px;">${mod.theory}</p>
+    ${labHTML}
   `;
-  if(mod.toolType==="numeric")setTimeout(updateNumericPlot,30);
-  if(mod.toolType==="area")setTimeout(drawAreaBetween,30);
+  setTimeout(()=>{
+    if(mod.labMode==="numeric")runNumericLab();
+    else if(mod.labMode==="area")runAreaLab();
+    else runSymbolicLab(mod.subType);
+  },30);
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function evalFn(t,x){return t==="x2"?x*x:t==="sin"?Math.sin(x)+1.5:0.5*Math.pow(x,3)-x+2;}
-function exactIntegral(t,a,b){return t==="x2"?(Math.pow(b,3)-Math.pow(a,3))/3:t==="sin"?(-Math.cos(b)+1.5*b)-(-Math.cos(a)+1.5*a):(0.125*Math.pow(b,4)-0.5*b*b+2*b)-(0.125*Math.pow(a,4)-0.5*a*a+2*a);}
-function updateNumericPlot(){
-  const c=document.getElementById("plotCanvas");if(!c)return;const ctx=c.getContext("2d");
-  const fn=document.getElementById("fnSelect").value,m=document.getElementById("methodSelect").value,n=parseInt(document.getElementById("nSlider").value,10);
-  const a=0,b=2,dx=(b-a)/n;ctx.clearRect(0,0,c.width,c.height);
-  const padL=40,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB,maxY=4.5;
+function fNum(t,x){return t==="x2"?x*x:t==="x3"?0.5*Math.pow(x,3)+1:t==="sin"?2*Math.sin(x)+2:Math.exp(0.5*x);}
+function FNum(t,x){return t==="x2"?Math.pow(x,3)/3:t==="x3"?0.125*Math.pow(x,4)+x:t==="sin"?-2*Math.cos(x)+2*x:2*Math.exp(0.5*x);}
+function runNumericLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const fn=document.getElementById("fnSel").value,m=document.getElementById("methSel").value;
+  let a=parseFloat(document.getElementById("numA").value)||0,b=parseFloat(document.getElementById("numB").value)||2;
+  if(b<=a)b=a+1;
+  const n=parseInt(document.getElementById("nRange").value,10),dx=(b-a)/n;
+  ctx.clearRect(0,0,c.width,c.height);
+  let maxY=1;for(let i=0;i<=50;i++){const y=fNum(fn,a+(i/50)*(b-a));if(y>maxY)maxY=y;}maxY*=1.15;
+  const padL=45,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB;
   const toX=x=>padL+((x-a)/(b-a))*W,toY=y=>padT+H-(y/maxY)*H;
-  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(padL,padT);ctx.lineTo(padL,padT+H);ctx.lineTo(padL+W,padT+H);ctx.stroke();
-  let approx=0;ctx.fillStyle="rgba(30,64,175,0.2)";ctx.strokeStyle="#1e40af";ctx.lineWidth=1.5;
+  ctx.strokeStyle="#94a3b8";ctx.beginPath();ctx.moveTo(padL,padT);ctx.lineTo(padL,padT+H);ctx.lineTo(padL+W,padT+H);ctx.stroke();
+  let approx=0,pts=[];ctx.fillStyle="rgba(37,99,235,0.22)";ctx.strokeStyle="#1e3a8a";ctx.lineWidth=1.5;
   if(m==="riemann-left"||m==="riemann-right"||m==="midpoint"){
-    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,sx=m==="riemann-right"?x1:m==="midpoint"?(x0+x1)/2:x0,h=evalFn(fn,sx);approx+=h*dx;ctx.fillRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));ctx.strokeRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));}
+    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,sx=m==="riemann-right"?x1:m==="midpoint"?(x0+x1)/2:x0,h=fNum(fn,sx);approx+=h*dx;if(i<4)pts.push(`f(${sx.toFixed(2)})=${h.toFixed(2)}`);ctx.fillRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));ctx.strokeRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));}
   }else if(m==="trapezoid"){
-    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,y0=evalFn(fn,x0),y1=evalFn(fn,x1);approx+=((y0+y1)/2)*dx;ctx.beginPath();ctx.moveTo(toX(x0),toY(0));ctx.lineTo(toX(x0),toY(y0));ctx.lineTo(toX(x1),toY(y1));ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
-  }else if(m==="simpson"){
-    for(let i=0;i<n;i+=2){const x0=a+i*dx,x1=x0+dx,x2=x0+2*dx,y0=evalFn(fn,x0),y1=evalFn(fn,x1),y2=evalFn(fn,x2);approx+=(dx/3)*(y0+4*y1+y2);ctx.beginPath();ctx.moveTo(toX(x0),toY(0));for(let t=0;t<=20;t++){const xt=x0+(t/20)*(2*dx),yt=y0*((xt-x1)*(xt-x2))/((x0-x1)*(x0-x2))+y1*((xt-x0)*(xt-x2))/((x1-x0)*(x1-x2))+y2*((xt-x0)*(xt-x1))/((x2-x0)*(x2-x1));ctx.lineTo(toX(xt),toY(yt));}ctx.lineTo(toX(x2),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
+    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,y0=fNum(fn,x0),y1=fNum(fn,x1);approx+=((y0+y1)/2)*dx;if(i<3)pts.push(`Trap_${i+1}=${(((y0+y1)/2)*dx).toFixed(3)}`);ctx.beginPath();ctx.moveTo(toX(x0),toY(0));ctx.lineTo(toX(x0),toY(y0));ctx.lineTo(toX(x1),toY(y1));ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
+  }else{
+    for(let i=0;i<n;i+=2){const x0=a+i*dx,x1=x0+dx,x2=x0+2*dx,y0=fNum(fn,x0),y1=fNum(fn,x1),y2=fNum(fn,x2);approx+=(dx/3)*(y0+4*y1+y2);if(i<4)pts.push(`Par_${i/2+1}=${((dx/3)*(y0+4*y1+y2)).toFixed(3)}`);ctx.beginPath();ctx.moveTo(toX(x0),toY(0));for(let t=0;t<=20;t++){const xt=x0+(t/20)*(2*dx),yt=y0*((xt-x1)*(xt-x2))/((x0-x1)*(x0-x2))+y1*((xt-x0)*(xt-x2))/((x1-x0)*(x1-x2))+y2*((xt-x0)*(xt-x1))/((x2-x0)*(x2-x1));ctx.lineTo(toX(xt),toY(yt));}ctx.lineTo(toX(x2),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
   }
-  ctx.strokeStyle="#d97706";ctx.lineWidth=2.5;ctx.beginPath();for(let px=0;px<=200;px++){const x=a+(px/200)*(b-a),y=evalFn(fn,x);px===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
-  const ex=exactIntegral(fn,a,b);document.getElementById("approxOut").innerText=approx.toFixed(4);document.getElementById("exactOut").innerText=ex.toFixed(4);document.getElementById("errOut").innerText=Math.abs(ex-approx).toFixed(4);
+  ctx.strokeStyle="#d97706";ctx.lineWidth=2.5;ctx.beginPath();for(let px=0;px<=200;px++){const x=a+(px/200)*(b-a),y=fNum(fn,x);px===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  const exact=FNum(fn,b)-FNum(fn,a);
+  document.getElementById("outApprox").innerText=approx.toFixed(5);
+  document.getElementById("outExact").innerText=exact.toFixed(5);
+  document.getElementById("outErr").innerText=Math.abs(exact-approx).toFixed(5);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Explicación Paso a Paso del Cálculo</h4><ol class="step-list"><li><strong>Ancho de partición:</strong> Δx = (${b} - ${a}) / ${n} = <strong>${dx.toFixed(4)}</strong>.</li><li><strong>Evaluación de nodos iniciales:</strong> ${pts.join(", ")} ...</li><li><strong>Resultado numérico:</strong> Suma acumulada = <strong>${approx.toFixed(5)}</strong> frente al valor analítico F(${b}) - F(${a}) = <strong>${exact.toFixed(5)}</strong>.</li></ol>`;
 }
-function drawAreaBetween(){
-  const c=document.getElementById("areaCanvas");if(!c)return;const ctx=c.getContext("2d");
-  const a=parseFloat(document.getElementById("limA").value)||-1.41,b=parseFloat(document.getElementById("limB").value)||1.41;
-  ctx.clearRect(0,0,c.width,c.height);const toX=x=>c.width/2+x*120,toY=y=>c.height-25-y*40;
-  ctx.fillStyle="rgba(30,64,175,0.2)";ctx.beginPath();
-  for(let i=0;i<=100;i++){const x=a+(i/100)*(b-a);i===0?ctx.moveTo(toX(x),toY(4-x*x)):ctx.lineTo(toX(x),toY(4-x*x));}
+function runAreaLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const k=parseFloat(document.getElementById("areaK").value)||4;
+  const a=parseFloat(document.getElementById("areaA").value)||-Math.sqrt(k/2);
+  const b=parseFloat(document.getElementById("areaB").value)||Math.sqrt(k/2);
+  ctx.clearRect(0,0,c.width,c.height);const toX=x=>c.width/2+x*110,toY=y=>c.height-25-y*(210/(k+1));
+  ctx.fillStyle="rgba(37,99,235,0.25)";ctx.beginPath();
+  for(let i=0;i<=100;i++){const x=a+(i/100)*(b-a);i===0?ctx.moveTo(toX(x),toY(k-x*x)):ctx.lineTo(toX(x),toY(k-x*x));}
   for(let i=100;i>=0;i--){const x=a+(i/100)*(b-a);ctx.lineTo(toX(x),toY(x*x));}
   ctx.closePath();ctx.fill();
-  ctx.strokeStyle="#1e40af";ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.2;x<=2.2;x+=0.05)x===-2.2?ctx.moveTo(toX(x),toY(4-x*x)):ctx.lineTo(toX(x),toY(4-x*x));ctx.stroke();
-  ctx.strokeStyle="#d97706";ctx.beginPath();for(let x=-2.2;x<=2.2;x+=0.05)x===-2.2?ctx.moveTo(toX(x),toY(x*x)):ctx.lineTo(toX(x),toY(x*x));ctx.stroke();
-  const F=x=>4*x-(2/3)*Math.pow(x,3);document.getElementById("areaBetweenOut").innerText=Math.abs(F(b)-F(a)).toFixed(4);
+  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.5;x<=2.5;x+=0.05)x===-2.5?ctx.moveTo(toX(x),toY(k-x*x)):ctx.lineTo(toX(x),toY(k-x*x));ctx.stroke();
+  ctx.strokeStyle="#d97706";ctx.beginPath();for(let x=-2.5;x<=2.5;x+=0.05)x===-2.5?ctx.moveTo(toX(x),toY(x*x)):ctx.lineTo(toX(x),toY(x*x));ctx.stroke();
+  const F=x=>k*x-(2/3)*Math.pow(x,3),area=Math.abs(F(b)-F(a));
+  document.getElementById("outArea").innerText=area.toFixed(4);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Desarrollo Analítico del Área</h4><ol class="step-list"><li><strong>Planteamiento:</strong> A = ∫<sub>${a}</sub><sup>${b}</sup> [ (${k} - x²) - (x²) ] dx = ∫ (${k} - 2x²) dx.</li><li><strong>Antiderivada:</strong> F(x) = ${k}x - (2/3)x³.</li><li><strong>Evaluación TFC:</strong> F(${b}) - F(${a}) = ${F(b).toFixed(4)} - (${F(a).toFixed(4)}) = <strong>${area.toFixed(4)} u²</strong>.</li></ol>`;
 }
-function calcSquare(){const a=parseFloat(document.getElementById("sqA").value)||1,b=parseFloat(document.getElementById("sqB").value)||0,c=parseFloat(document.getElementById("sqC").value)||0,h=b/(2*a),k=c-(b*b)/(4*a);document.getElementById("sqResult").innerText=`${a}(x ${h>=0?'+ '+h.toFixed(2):'- '+Math.abs(h).toFixed(2)})² ${k>=0?'+ '+k.toFixed(2):'- '+Math.abs(k).toFixed(2)}`;}
-function updateLiate(){const cases=["u = ln(x) → du = (1/x)dx | dv = x dx → v = x²/2","u = x² → du = 2x dx | dv = sen(x)dx → v = -cos(x)","u = arctan(x) → du = dx/(1+x²) | dv = dx → v = x"];document.getElementById("liateOut").innerText=cases[document.getElementById("liateSelect").value];}
+function runSymbolicLab(type){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const a=parseFloat(document.getElementById("symA").value)||2;
+  const b=parseFloat(document.getElementById("symB").value)||3;
+  const x0=parseFloat(document.getElementById("symX0").value)||0;
+  const x1=parseFloat(document.getElementById("symX1").value)||2;
+  let f,F,primTxt="",steps=[];
+  if(type==="direct"){f=x=>a*Math.pow(x,b);F=x=>(a/(b+1))*Math.pow(x,b+1);primTxt=`(${a}/${b+1})x^${b+1} + C`;steps=[`Integrando: f(x) = ${a}x^${b}`,`Regla de potencia: suma 1 al exponente (${b}+1=${b+1}) y divide por ${b+1}.`,`Primitiva: F(x) = ${primTxt}`];}
+  else if(type==="subst"){f=x=>2*a*x*Math.pow(a*x*x+b,2);F=x=>Math.pow(a*x*x+b,3)/3;primTxt=`(${a}x² + ${b})³ / 3 + C`;steps=[`Sustitución: u = ${a}x² + ${b} → du = ${2*a}x dx`,`Integral transformada: ∫ u² du = u³ / 3 + C`,`Reemplazando u: ${primTxt}`];}
+  else if(type==="exp"){f=x=>b*Math.exp(0.5*a*x);F=x=>(b/(0.5*a))*Math.exp(0.5*a*x);primTxt=`(${(b/(0.5*a)).toFixed(2)})e^(${0.5*a}x) + C`;steps=[`Integrando exponencial: f(x) = ${b}·e^(${0.5*a}x)`,`Sustitución en exponente u = ${0.5*a}x → dx = du / ${0.5*a}`,`Primitiva: ${primTxt}`];}
+  else if(type==="log"){f=x=>a/(x+Math.abs(b)+1);F=x=>a*Math.log(Math.abs(x+Math.abs(b)+1));const cVal=Math.abs(b)+1;primTxt=`${a}·ln|x + ${cVal}| + C`;steps=[`Forma racional: ∫ ${a} / (x + ${cVal}) dx`,`Numerador constante sobre función lineal u = x + ${cVal}`,`Primitiva logarítmica: ${primTxt}`];}
+  else if(type==="trig"){f=x=>a*Math.cos(b*x)+a;F=x=>(a/b)*Math.sin(b*x)+a*x;primTxt=`(${a}/${b})sen(${b}x) + ${a}x + C`;steps=[`Integrando: f(x) = ${a}cos(${b}x) + ${a}`,`Sustitución angular u = ${b}x → du = ${b}dx`,`Primitiva: ${primTxt}`];}
+  else if(type==="invtrig"){const a2=a*a;f=x=>b/(a2+x*x);F=x=>(b/a)*Math.atan(x/a);primTxt=`(${b}/${a})arctan(x/${a}) + C`;steps=[`Identificamos a² = ${a2} → a = ${a}`,`Aplicamos ∫ dx/(a² + x²) = (1/a)arctan(x/a)`,`Primitiva: ${primTxt}`];}
+  else if(type==="hyp"){const a2=a*a;f=x=>b/Math.sqrt(x*x+a2);F=x=>b*Math.asinh(x/a);primTxt=`${b}·arcsinh(x/${a}) + C`;steps=[`Identificamos radical √(x² + ${a2}) con a = ${a}`,`Equivalencia hiperbólica inversa: arcsinh(x/${a})`,`Primitiva: ${primTxt}`];}
+  else if(type==="trinom"){const h=b/2,k=Math.abs(a)+1;f=x=>1/(Math.pow(x+h,2)+k*k);F=x=>(1/k)*Math.atan((x+h)/k);primTxt=`(1/${k})arctan((x + ${h})/${k}) + C`;steps=[`Completación de cuadrados: (x + ${h})² + ${k}²`,`Reducción a forma estándar u² + a² con u = x + ${h}, a = ${k}`,`Primitiva: ${primTxt}`];}
+  else{f=x=>a*x*Math.exp(0.5*x);F=x=>2*a*x*Math.exp(0.5*x)-4*a*Math.exp(0.5*x);primTxt=`${2*a}x·e^(0.5x) - ${4*a}e^(0.5x) + C`;steps=[`Elección LIATE: u = ${a}x (Algebraica) → du = ${a}dx; dv = e^(0.5x)dx → v = 2e^(0.5x)`,`Fórmula u·v - ∫v du = ${2*a}x·e^(0.5x) - ∫ ${2*a}e^(0.5x)dx`,`Resultado integrado: ${primTxt}`];}
+  
+  ctx.clearRect(0,0,c.width,c.height);
+  const minX=Math.min(x0,x1)-1,maxX=Math.max(x0,x1)+1;
+  let minY=0,maxY=1;
+  for(let i=0;i<=60;i++){const x=minX+(i/60)*(maxX-minX),y1=f(x),y2=F(x);if(isFinite(y1)){minY=Math.min(minY,y1);maxY=Math.max(maxY,y1);}if(isFinite(y2)){minY=Math.min(minY,y2);maxY=Math.max(maxY,y2);}}
+  const padL=45,padR=20,padT=20,padB=25,W=c.width-padL-padR,H=c.height-padT-padB;
+  const toX=x=>padL+((x-minX)/(maxX-minX))*W,toY=y=>padT+H-((y-minY)/(maxY-minY+0.01))*H;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(padL,toY(0));ctx.lineTo(padL+W,toY(0));ctx.stroke();
+  // Área bajo f(x)
+  ctx.fillStyle="rgba(30,58,138,0.18)";ctx.beginPath();ctx.moveTo(toX(x0),toY(0));
+  for(let i=0;i<=60;i++){const x=x0+(i/60)*(x1-x0);ctx.lineTo(toX(x),toY(f(x)));}
+  ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();
+  // Curva f(x)
+  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=120;i++){const x=minX+(i/120)*(maxX-minX),y=f(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  // Curva F(x)
+  ctx.strokeStyle="#059669";ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=120;i++){const x=minX+(i/120)*(maxX-minX),y=F(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  const defVal=F(x1)-F(x0);
+  document.getElementById("outPrim").innerText=primTxt;
+  document.getElementById("outDef").innerText=isFinite(defVal)?defVal.toFixed(4):"Indefinido en rango";
+  document.getElementById("stepExplanation").innerHTML=`<h4>Explicación Paso a Paso y Evaluación TFC</h4><ol class="step-list">${steps.map(s=>`<li>${s}</li>`).join("")}<li><strong>Evaluación en [${x0}, ${x1}]:</strong> F(${x1}) - F(${x0}) = <strong>${isFinite(defVal)?defVal.toFixed(4):"N/A"}</strong>.</li></ol>`;
+}
 renderModules(modulesData);
 </script>
 </body>
