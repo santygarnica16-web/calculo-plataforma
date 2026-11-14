@@ -58,67 +58,24 @@ footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
   </div>
   <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; 14 Módulos Interactivos</footer>
 </main>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plataforma de Cálculo Integral · UTP</title>
-<style>
-:root{--bg:#f1f5f9;--surface:#ffffff;--primary:#1e3a8a;--primary-mid:#2563eb;--primary-light:#eff6ff;--text-main:#0f172a;--text-muted:#475569;--border:#cbd5e1;--badge-bg:#dbeafe;--badge-text:#1e40af;--radius:16px;--shadow:0 4px 14px rgba(15,23,42,0.06)}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:50px}
-.hero-header{background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 100%);color:#fff;text-align:center;padding:38px 20px;margin-bottom:24px;box-shadow:var(--shadow);cursor:pointer}
-.hero-header h1{font-size:23px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px}
-.hero-header p{font-size:14px;opacity:0.92}
-.container{max-width:860px;margin:0 auto;padding:0 16px}
-.section-title{font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:12px}
-.search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
-.search-input:focus{border-color:var(--primary-mid)}
-.modules-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
-.module-card:hover{transform:translateY(-3px);border-color:var(--primary-mid)}
-.module-num{font-size:12.5px;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-.module-title{font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:12px}
-.badge-status{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;display:inline-block}
-#detail-view{display:none}
-.detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
-.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);border:none;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;margin-bottom:18px}
-.formula-box{background:#f8fafc;border-left:4px solid var(--primary-mid);padding:14px 16px;border-radius:8px;font-family:"Courier New",monospace;font-size:14.5px;font-weight:700;color:var(--primary);margin:12px 0;overflow-x:auto}
-.section-h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--text-main);border-bottom:1px solid #e2e8f0;padding-bottom:4px}
-.lab-panel{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:18px}
-.lab-header{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:14px}
-.control-group label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
-.control-group select,.control-group input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13.5px;font-weight:600}
-canvas{width:100%;height:280px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:12px 0}
-.legend-bar{display:flex;gap:16px;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;flex-wrap:wrap}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
-.result-banner{background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:10px}
-.dynamic-steps{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:13.5px}
-.dynamic-steps h4{font-size:13.5px;color:var(--primary);margin-bottom:8px}
-.step-list{padding-left:20px;font-size:14px}
-.step-list li{margin-bottom:6px}
-footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
-</style>
-</head>
-<body>
-<div class="hero-header" onclick="showHome()">
-  <h1>Plataforma de Cálculo Integral</h1>
-  <p>Universidad Tecnológica de Pereira &middot; Laboratorio Interactivo</p>
-</div>
-<main class="container">
-  <div id="home-view">
-    <div class="section-title">Módulos del Proyecto (14 Módulos)</div>
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo o método (ej: Riemann, Simpson, Sustitución, Partes)..." onkeyup="filterModules()">
-    <div class="modules-list" id="modulesContainer"></div>
-  </div>
-  <div id="detail-view">
-    <button class="back-btn" onclick="showHome()">&larr; Volver a los 14 Módulos</button>
-    <div class="detail-box" id="detailContent"></div>
-  </div>
-  <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; 14 Módulos Interactivos</footer>
-</main>
-const container=document.getElementById("modulesContainer");
+<script>
+const modulesData=[
+{id:1,num:"M1",title:"Sumas de Riemann",desc:"Suma izquierda, derecha y punto medio: aproximación del área bajo la curva como límite.",formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ],   con Δx = (b - a) / n",theory:"Divide el intervalo [a, b] en n subintervalos de ancho uniforme Δx. Dependiendo del punto muestra x_i* (extremo izquierdo, derecho o centro), se construyen rectángulos cuya suma converge a la integral definida cuando n → ∞.",labMode:"numeric",defaultMethod:"riemann-left"},
+{id:2,num:"M2",title:"Regla del Trapecio",desc:"Aproximación mediante trapecios inscritos y justificación geométrica del error.",formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + 2f(x_2) + ... + 2f(x_{n-1}) + f(x_n) ]",theory:"Sustituye los techos horizontales de Riemann por segmentos secantes que unen puntos consecutivos de f(x), formando trapecios que se ajustan mucho mejor a la pendiente de la curva.",labMode:"numeric",defaultMethod:"trapezoid"},
+{id:3,num:"M3",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa f(x) en el centro geométrico de cada subintervalo. El error por exceso en la mitad del rectángulo compensa casi exactamente el error por defecto en la otra mitad.",labMode:"numeric",defaultMethod:"midpoint"},
+{id:4,num:"M4",title:"Regla de Simpson",desc:"Ajuste cuadrático por arcos parabólicos y condición obligatoria de n par.",formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + ... + 4f(x_{n-1}) + f(x_n) ]  (n par)",theory:"Interpola cada trío de puntos consecutivos mediante una parábola de segundo grado. Exige que n sea par y produce precisión exacta para cualquier polinomio cúbico.",labMode:"numeric",defaultMethod:"simpson"},
+{id:5,num:"M5",title:"Integral Definida y Área",desc:"Teorema Fundamental del Cálculo y cálculo de área encerrada entre dos curvas.",formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A = ∫_a^b [ f_sup(x) - g_inf(x) ] dx",theory:"El Segundo Teorema Fundamental del Cálculo permite evaluar áreas exactas mediante la diferencia de primitivas F(b) - F(a). Entre dos curvas se integra la función superior menos la inferior.",labMode:"area"},
+{id:6,num:"M6",title:"Integración Directa",desc:"Linealidad, regla de la potencia y relación gráfica entre f(x) y su antiderivada F(x).",formula:"∫ [ k·x^n + m·x^p ] dx = k·x^{n+1}/(n+1) + m·x^{p+1}/(p+1) + C",theory:"La integral indefinida encuentra la familia de funciones F(x) + C cuya derivada es el integrando f(x). Geométricamente, F(x) representa la acumulación de área desde un punto fijo.",labMode:"symbolic",subType:"direct"},
+{id:7,num:"M7",title:"Sustitución / Potencias",desc:"Cambio de variable u = g(x) y regla de la cadena inversa.",formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du = F(g(x)) + C",theory:"Identifica una función interna u = g(x) acompañada de su diferencial du = g'(x) dx para reducir una integral compuesta a una potencia inmediata.",labMode:"symbolic",subType:"subst"},
+{id:8,num:"M8",title:"Integrales Exponenciales",desc:"Integración de funciones con base natural e y bases arbitrarias a > 0.",formula:"∫ k·e^{a·x} dx = (k/a)·e^{a·x} + C   |   ∫ b^{a·x} dx = b^{a·x} / (a·ln(b)) + C",theory:"La función exponencial mantiene su estructura al integrarse, dividiendo únicamente por la derivada interna del exponente (y por ln(b) si la base no es e).",labMode:"symbolic",subType:"exp"},
+{id:9,num:"M9",title:"Integrales Logarítmicas",desc:"Formas racionales f'(x)/f(x) que conducen al logaritmo natural.",formula:"∫ (k / (a·x + b)) dx = (k / a) · ln|a·x + b| + C",theory:"Resuelve el caso crítico de potencia n = -1. Siempre que el numerador sea proporcional a la derivada del denominador, la primitiva es logarítmica.",labMode:"symbolic",subType:"log"},
+{id:10,num:"M10",title:"Integrales Trigonométricas",desc:"Potencias y productos de seno y coseno mediante identidades.",formula:"∫ sen(a·x) dx = -(1/a)cos(a·x) + C   |   ∫ cos(a·x) dx = (1/a)sen(a·x) + C",theory:"Combina identidades pitagóricas (sen²x + cos²x = 1) y reducción de ángulo doble para transformar potencias trigonométricas en integrales directas.",labMode:"symbolic",subType:"trig"},
+{id:11,num:"M11",title:"Trigonométricas Inversas",desc:"Formas radicales y racionales que producen arcsen(u/a) y arctan(u/a).",formula:"∫ dx / (a² + x²) = (1/a) arctan(x/a) + C   |   ∫ dx / √(a² - x²) = arcsen(x/a) + C",theory:"Cuando el denominador presenta sumas o diferencias de cuadrados irreducibles, la sustitución trigonométrica genera funciones ciclométricas inversas.",labMode:"symbolic",subType:"invtrig"},
+{id:12,num:"M12",title:"Hiperbólicas Inversas",desc:"Integrales con radicales cuadráticos asociadas a arcsinh y arccosh.",formula:"∫ dx / √(x² + a²) = arcsinh(x/a) + C = ln|x + √(x² + a²)| + C",theory:"Proporciona una representación directa y logarítmica para integrandos con raíces de la forma √(u² ± a²).",labMode:"symbolic",subType:"hyp"},
+{id:13,num:"M13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados para reducir denominadores cuadráticos.",formula:"ax² + bx + c = a(x + b/2a)² + (c - b²/4a)",theory:"Transforma cualquier trinomio cuadrático general en una suma o diferencia de cuadrados perfecta para aplicar luego arctan, arcsen o logaritmos.",labMode:"symbolic",subType:"trinom"},
+{id:14,num:"M14",title:"Integración por Partes",desc:"Descomposición ∫u dv = uv - ∫v du y jerarquía LIATE.",formula:"∫ u dv = u · v - ∫ v du",theory:"Permite integrar productos de dos familias distintas de funciones. La regla LIATE (Logarítmica, Inversa, Algebraica, Trigonométrica, Exponencial) determina la elección óptima de u.",labMode:"symbolic",subType:"parts"}
+];
+  const container=document.getElementById("modulesContainer");
 function renderModules(list){
   container.innerHTML="";
   list.forEach(mod=>{
