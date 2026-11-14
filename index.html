@@ -13,6 +13,7 @@ body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:
 .container{max-width:860px;margin:0 auto;padding:0 16px}
 .section-title{font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:12px}
 .search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
+.search-input:focus{border-color:var(--primary-mid)}
 .modules-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
 .module-card:hover{transform:translateY(-3px);border-color:var(--primary-mid)}
@@ -45,7 +46,7 @@ footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
 </div>
 <main class="container">
   <div id="home-view">
-    <div class="section-title">Módulos del Proyecto (Hasta Sólidos de Revolución)</div>
+    <div class="section-title">Módulos del Proyecto (Hasta Sólidos de Revolución)[span_0](start_span)[span_0](end_span)</div>
     <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo (ej: Riemann, Discos, Arandelas, Capas, Partes)..." onkeyup="filterModules()">
     <div class="modules-list" id="modulesContainer"></div>
   </div>
@@ -227,6 +228,16 @@ function runDiskLab(){
   document.getElementById("outDiskReal").innerText=volInt.toFixed(2);
   document.getElementById("stepExplanation").innerHTML=`<h4>Método de Discos (Eje X)</h4><ol class="step-list"><li>Fórmula: <strong>V = π ∫ [f(x)]² dx</strong>.</li><li>Volumen calculado en [${a}, ${b}] = <strong>${volInt.toFixed(2)} u³</strong>.</li></ol>`;
 }
+function runWasherLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const b=parseFloat(document.getElementById("washB").value)||2;
+  ctx.clearRect(0,0,c.width,c.height);const W=c.width,H=c.height;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(40,H/2);ctx.lineTo(W-40,H/2);ctx.stroke();
+  const vol=Math.PI*((b*b)/2-Math.pow(b,3)/12);
+  ctx.fillStyle="rgba(217,119,6,0.3)";ctx.fillRect(80,H/2-70,200,140);
+  document.getElementById("outWashVol").innerText=vol.toFixed(3);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Método de Arandelas</h4><ol class="step-list"><li>Fórmula: <strong>V = π ∫ ( [R(x)]² - [r(x)]² ) dx</strong>.</li><li>Volumen con hueco central = <strong>${vol.toFixed(3)} u³</strong>.</li></ol>`;
+}
 function runShellLab(){
   const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
   const fn=document.getElementById("shellFn").value;
@@ -237,13 +248,9 @@ function runShellLab(){
   const maxY=fn==="par"?5:Math.max(8,Math.pow(b,3)*1.2);
   const toX=x=>padL+(x/b)*graphW;
   const toY=y=>padT+graphH-(y/maxY)*graphH;
-
-  // Ejes coordenados
   ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(padL,toY(0));ctx.lineTo(W-padR,toY(0));ctx.stroke();
   ctx.beginPath();ctx.moveTo(padL,padT);ctx.lineTo(padL,padT+graphH);ctx.stroke();
-
-  // Dibujar capas cilíndricas (representativas)
   const n=6,dx=b/n;
   ctx.fillStyle="rgba(37,99,235,0.25)";ctx.strokeStyle="#1e3a8a";ctx.lineWidth=1.5;
   for(let i=0;i<n;i++){
@@ -255,8 +262,6 @@ function runShellLab(){
       ctx.strokeRect(xPos-5,toY(h),10,toY(0)-toY(h));
     }
   }
-
-  // Curva f(x)
   ctx.strokeStyle="#d97706";ctx.lineWidth=2.5;ctx.beginPath();
   for(let px=0;px<=100;px++){
     const x=(px/100)*b;
@@ -264,8 +269,33 @@ function runShellLab(){
     px===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));
   }
   ctx.stroke();
-
   const vol=fn==="par"?2*Math.PI*(2*b*b-Math.pow(b,4)/4):2*Math.PI*(Math.pow(b,5)/5);
   document.getElementById("outShellVol").innerText=isFinite(vol)?vol.toFixed(3):"0";
   document.getElementById("stepExplanation").innerHTML=`<h4>Método de Capas Cilíndricas (Shell)</h4><ol class="step-list"><li>Fórmula: <strong>V = 2π ∫ x · f(x) dx</strong>.</li><li>Función: f(x) = ${fn==="par"?"4 - x²":"x³"} en [0, ${b}].</li><li>Volumen por cascarones = <strong>${isFinite(vol)?vol.toFixed(3):0} u³</strong>.</li></ol>`;
 }
+function runSymbolicLab(type){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const a=parseFloat(document.getElementById("symA").value)||2,b=parseFloat(document.getElementById("symB").value)||3;
+  const x0=parseFloat(document.getElementById("symX0").value)||0,x1=parseFloat(document.getElementById("symX1").value)||2;
+  ctx.clearRect(0,0,c.width,c.height);
+  const f=x=>a*Math.pow(x,b),F=x=>(a/(b+1))*Math.pow(x,b+1);
+  const minX=Math.min(x0,x1)-1,maxX=Math.max(x0,x1)+1;
+  let minY=0,maxY=1;
+  for(let i=0;i<=50;i++){const x=minX+(i/50)*(maxX-minX),y1=f(x),y2=F(x);if(isFinite(y1)){minY=Math.min(minY,y1);maxY=Math.max(maxY,y1);}if(isFinite(y2)){minY=Math.min(minY,y2);maxY=Math.max(maxY,y2);}}
+  const padL=45,padR=20,padT=20,padB=25,W=c.width-padL-padR,H=c.height-padT-padB;
+  const toX=x=>padL+((x-minX)/(maxX-minX))*W,toY=y=>padT+H-((y-minY)/(maxY-minY+0.01))*H;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(padL,toY(0));ctx.lineTo(padL+W,toY(0));ctx.stroke();
+  ctx.fillStyle="rgba(30,58,138,0.18)";ctx.beginPath();ctx.moveTo(toX(x0),toY(0));
+  for(let i=0;i<=50;i++){const x=x0+(i/50)*(x1-x0);ctx.lineTo(toX(x),toY(f(x)));}
+  ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();
+  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();for(let i=0;i<=100;i++){const x=minX+(i/100)*(maxX-minX),y=f(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  ctx.strokeStyle="#059669";ctx.lineWidth=2.5;ctx.beginPath();for(let i=0;i<=100;i++){const x=minX+(i/100)*(maxX-minX),y=F(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  const defVal=F(x1)-F(x0);
+  document.getElementById("outPrim").innerText=`(${a}/${b+1})x^${b+1} + C`;
+  document.getElementById("outDef").innerText=isFinite(defVal)?defVal.toFixed(4):"N/A";
+  document.getElementById("stepExplanation").innerHTML=`<h4>Desarrollo Simbólico y TFC</h4><ol class="step-list"><li>Primitiva general: F(x) = (${a}/${b+1})x^${b+1} + C.</li><li>Evaluación en [${x0}, ${x1}]: F(${x1}) - F(${x0}) = <strong>${isFinite(defVal)?defVal.toFixed(4):"N/A"}</strong>.</li></ol>`;
+}
+renderModules(modulesData);
+</script>
+</body>
+</html>
