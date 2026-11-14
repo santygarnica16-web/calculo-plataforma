@@ -2,97 +2,125 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cálculo Integral · Universidad Tecnológica de Pereira</title>
+<title>Plataforma de Cálculo Integral - Fase 1</title>
 <style>
-:root{--bg:#f4f6f8;--surface:#ffffff;--primary:#0f4c5c;--primary-light:#e6f0f2;--text-main:#1a202c;--text-muted:#5a6778;--border:#e2e8f0;--badge-bg:#e6f4ea;--badge-text:#137333;--tag-bg:#edf2f7;--tag-text:#4a5568;--radius:14px;--shadow:0 2px 10px rgba(0,0,0,0.04)}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-body{background:var(--bg);color:var(--text-main);line-height:1.55;padding-bottom:40px}
-header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
-.logo-box{width:44px;height:44px;border-radius:12px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0}
-.brand-text h1{font-size:17px;font-weight:700;color:var(--text-main);line-height:1.2}
-.brand-text p{font-size:12.5px;color:var(--text-muted)}
-.btn-outline{background:var(--surface);border:1px solid var(--border);padding:8px 14px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--text-main);cursor:pointer}
-.container{max-width:820px;margin:0 auto;padding:20px 16px}
-.search-bar{margin-bottom:18px;display:flex;gap:10px}
-.search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14.5px;outline:none}
-.modules-list{display:flex;flex-direction:column;gap:14px}
-.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s ease,border-color .15s ease}
+:root{--bg:#f4f6f8;--surface:#ffffff;--primary:#1e40af;--primary-light:#eff6ff;--text-main:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--badge-bg:#dbeafe;--badge-text:#1d4ed8;--radius:16px;--shadow:0 4px 12px rgba(0,0,0,0.05)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:50px}
+.hero-header{background:var(--primary);color:#fff;text-align:center;padding:36px 20px;margin-bottom:24px;box-shadow:var(--shadow);cursor:pointer}
+.hero-header h1{font-size:22px;font-weight:800;margin-bottom:8px;line-height:1.3}
+.hero-header p{font-size:13.5px;opacity:0.9}
+.container{max-width:780px;margin:0 auto;padding:0 16px}
+.section-title{font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:14px}
+.search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
+.modules-list{display:flex;flex-direction:column;gap:12px}
+.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
 .module-card:hover{transform:translateY(-2px);border-color:var(--primary)}
-.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.module-num{font-size:12px;font-weight:700;letter-spacing:.6px;color:var(--text-muted);text-transform:uppercase}
-.badge-active{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
-.module-title{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:700;color:var(--text-main);margin-bottom:6px}
-.module-desc{font-size:14px;color:var(--text-muted);margin-bottom:14px}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{background:var(--tag-bg);color:var(--tag-text);font-size:12px;padding:4px 10px;border-radius:8px;font-weight:500}
+.module-num{font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.module-title{font-size:19px;font-weight:700;color:var(--text-main);margin-bottom:12px}
+.badge-fase{background:var(--badge-bg);color:var(--badge-text);font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;display:inline-block}
 #detail-view{display:none}
 .detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
 .back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);border:none;padding:8px 14px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer;margin-bottom:18px}
-.formula-box{background:#f8fafc;border-left:4px solid var(--primary);padding:14px 16px;border-radius:8px;font-family:"Courier New",Courier,monospace;font-size:15px;font-weight:700;color:var(--primary);margin:14px 0;overflow-x:auto}
-.section-h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--text-main)}
+.formula-box{background:#f8fafc;border-left:4px solid var(--primary);padding:14px;border-radius:8px;font-family:monospace;font-size:14.5px;color:var(--primary);margin:14px 0;overflow-x:auto}
+.section-h3{font-size:15px;font-weight:700;margin:16px 0 6px;color:var(--text-main)}
 .tool-panel{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:16px}
-.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
-.control-group label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
-.control-group select,.control-group input{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13.5px}
-canvas{width:100%;max-height:280px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:10px 0}
-.result-banner{background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:10px}
-table.formula-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
-table.formula-table th,table.formula-table td{border:1px solid var(--border);padding:10px;text-align:left}
+.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.control-group label{display:block;font-size:11.5px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
+.control-group select,.control-group input{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13px}
+canvas{width:100%;max-height:260px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:10px 0}
+.result-banner{background:var(--primary);color:#fff;padding:10px 14px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:10px}
+table.formula-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+table.formula-table th,table.formula-table td{border:1px solid var(--border);padding:8px;text-align:left}
 table.formula-table th{background:var(--primary-light);color:var(--primary)}
-.step-list{padding-left:20px;margin-top:8px;font-size:14px;color:var(--text-main)}
-.step-list li{margin-bottom:6px}
-footer{text-align:center;margin-top:32px;font-size:13px;color:var(--text-muted)}
+.step-list{padding-left:18px;margin-top:6px;font-size:13.5px}
+.step-list li{margin-bottom:4px}
+footer{text-align:center;margin-top:30px;font-size:12.5px;color:var(--text-muted)}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand" onclick="showHome()"><div class="logo-box">&Sigma;</div><div class="brand-text"><h1>Cálculo Integral</h1><p>Universidad Tecnológica de Pereira</p></div></div>
-  <button class="btn-outline" onclick="showHome()">Módulos</button>
-</header>
+<div class="hero-header" onclick="showHome()">
+  <h1>Plataforma de Cálculo Integral - Fase 1</h1>
+  <p>Universidad Tecnológica de Pereira</p>
+</div>
 <main class="container">
   <div id="home-view">
-    <div class="search-bar"><input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo o tema (ej: Riemann, Simpson, LIATE, trigonométricas)..." onkeyup="filterModules()"></div>
+    <div class="section-title">Módulos del Proyecto (14 Módulos)</div>
+    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo (ej: Riemann, Trapecio, Simpson)..." onkeyup="filterModules()">
     <div class="modules-list" id="modulesContainer"></div>
   </div>
   <div id="detail-view">
-    <button class="back-btn" onclick="showHome()">&larr; Volver a los 14 Módulos</button>
+    <button class="back-btn" onclick="showHome()">&larr; Volver a los módulos</button>
     <div class="detail-box" id="detailContent"></div>
   </div>
-  <footer>Plataforma educativa de Cálculo Integral &middot; UTP &middot; 14 módulos activos</footer>
+  <footer>Universidad Tecnológica de Pereira &middot; 14 Módulos Interactivos</footer>
 </main>
-  <script>
+<script>
 const modulesData=[
-{id:1,num:"MÓDULO 01",title:"Sumas de Riemann",desc:"Suma izquierda, derecha y punto medio: la aproximación del área como límite.",tags:["aproximación","límite","particiones"],formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ],   donde Δx = (b - a) / n",theory:"Las sumas de Riemann permiten aproximar el área bajo una curva f(x) en un intervalo cerrado [a, b] dividiéndolo en n subintervalos de ancho Δx. Al hacer que n tienda a infinito, la suma converge al valor exacto de la integral definida.",example:["Sea f(x) = x² en [0, 2] con n = 4 subintervalos.","Ancho de cada rectángulo: Δx = (2 - 0) / 4 = 0.5.","Suma derecha: 0.5 · [f(0.5) + f(1.0) + f(1.5) + f(2.0)] = 3.75.","Valor exacto de la integral: ∫₀² x² dx = 8/3 ≈ 2.6667."],toolType:"numeric",defaultMethod:"riemann-left"},
-{id:2,num:"MÓDULO 02",title:"Regla del Trapecio",desc:"Aproximación con trapecios y su justificación geométrica.",tags:["cuadratura","trapecios"],formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + ... + 2f(x_{n-1}) + f(x_n) ]",theory:"En lugar de usar rectángulos horizontales, la Regla del Trapecio une los puntos consecutivos de la curva mediante segmentos rectos, formando trapecios cuya área promedio reduce notablemente el error.",example:["Aproximar ∫₀² x² dx con n = 4 trapecios (Δx = 0.5).","T₄ = 0.25 · [0 + 2(0.25) + 2(1) + 2(2.25) + 4] = 2.75.","Error absoluto respecto a 2.6667: apenas 0.0833."],toolType:"numeric",defaultMethod:"trapezoid"},
-{id:3,num:"MÓDULO 03",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",tags:["cuadratura","rectángulos"],formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa la altura de cada rectángulo en el centro geométrico de cada subintervalo. El exceso de área por un lado compensa casi por completo el déficit del otro lado.",example:["Aproximar ∫₀² x² dx con n = 4 (Δx = 0.5).","Puntos medios: 0.25, 0.75, 1.25 y 1.75.","M₄ = 0.5 · [0.0625 + 0.5625 + 1.5625 + 3.0625] = 2.625."],toolType:"numeric",defaultMethod:"midpoint"},
-{id:4,num:"MÓDULO 04",title:"Regla de Simpson",desc:"Parábolas ajustadas por tramos y la condición de n par.",tags:["cuadratura","parábolas"],formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + ... + f(x_n) ]   (n par)",theory:"Reemplaza los segmentos lineales por arcos parabólicos que pasan por tres puntos consecutivos. Exige obligatoriamente que n sea par y da el valor exacto para polinomios de hasta grado 3.",example:["Aproximar ∫₀² x² dx con n = 4 (par, Δx = 0.5).","S₄ = (1/6) · [0 + 4(0.25) + 2(1) + 4(2.25) + 4] = 2.6667.","Resultado exacto con error igual a cero."],toolType:"numeric",defaultMethod:"simpson"},
-{id:5,num:"MÓDULO 05",title:"Integral Definida y Área bajo la Curva",desc:"Teorema Fundamental del Cálculo y área entre curvas.",tags:["TFC","área"],formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A_entre = ∫_a^b [ f(x) - g(x) ] dx",theory:"El Teorema Fundamental del Cálculo (TFC) conecta la derivación con la integración: si F'(x) = f(x), la integral definida equivale a F(b) - F(a). Para área entre curvas se integra la superior menos la inferior.",example:["Área entre f(x) = 4 - x² y g(x) = x² en [-√2, √2].","A = ∫_{-√2}^{√2} (4 - 2x²) dx = [4x - (2/3)x³] = (16/3)√2 ≈ 7.5425 u²."],toolType:"area"},
-{id:6,num:"MÓDULO 06",title:"Integración Directa",desc:"Compendio de fórmulas básicas y relación entre f(x) y F(x).",tags:["antiderivadas","fórmulas"],formula:"∫ x^n dx = x^{n+1} / (n + 1) + C   (n ≠ -1)",theory:"Busca la familia de primitivas F(x) + C cuya derivada reproduce f(x). Dominar las reglas inmediatas es la base de todo el curso.",example:["Calcular ∫ (5x⁴ - 3x² + 7) dx.","Integrando término a término: x⁵ - x³ + 7x + C."],toolType:"table"},
-{id:7,num:"MÓDULO 07",title:"Sustitución / Potencias",desc:"Método de sustitución y la regla de la potencia generalizada.",tags:["sustitución"],formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du,   donde u = g(x), du = g'(x) dx",theory:"Es la regla de la cadena en sentido inverso. Sustituimos u = g(x) cuando el integrando contiene su derivada g'(x) dx.",example:["Resolver ∫ 2x · (x² + 3)⁵ dx.","u = x² + 3 → du = 2x dx → ∫ u⁵ du = (x² + 3)⁶ / 6 + C."],toolType:"check"},
-{id:8,num:"MÓDULO 08",title:"Integrales Exponenciales",desc:"Integrales con base e y bases arbitrarias.",tags:["exponencial"],formula:"∫ e^u du = e^u + C   |   ∫ a^u du = a^u / ln(a) + C",theory:"La función e^u es invariante bajo integración. Si la base es a ≠ 1, se divide entre ln(a).",example:["Resolver ∫ (e^{3x} + 2^x) dx = (1/3)e^{3x} + 2^x / ln(2) + C."],toolType:"check"},
-{id:9,num:"MÓDULO 09",title:"Integrales Logarítmicas",desc:"Formas que conducen al logaritmo natural.",tags:["logaritmo"],formula:"∫ (1 / u) du = ln|u| + C   |   ∫ (f'(x) / f(x)) dx = ln|f(x)| + C",theory:"Cubre el caso n = -1 de la potencia. Cuando el numerador es la derivada del denominador, el resultado es ln|denominador| + C.",example:["Resolver ∫ (4x / (x² + 5)) dx = 2 · ln(x² + 5) + C."],toolType:"check"},
-{id:10,num:"MÓDULO 10",title:"Integrales Trigonométricas",desc:"Potencias y productos de funciones trigonométricas.",tags:["trigonometría"],formula:"sen²(x) + cos²(x) = 1   |   sen²(x) = (1 - cos(2x))/2   |   cos²(x) = (1 + cos(2x))/2",theory:"Se usan identidades pitagóricas cuando hay exponentes impares o identidades de ángulo medio cuando todos los exponentes son pares.",example:["Resolver ∫ sen³(x) · cos²(x) dx = -cos³(x)/3 + cos⁵(x)/5 + C."],toolType:"check"},
-{id:11,num:"MÓDULO 11",title:"Trigonométricas Inversas",desc:"Formas que producen arcsen, arctan y arcsec.",tags:["inversas"],formula:"∫ du/√(a² - u²) = arcsen(u/a) + C   |   ∫ du/(a² + u²) = (1/a)arctan(u/a) + C",theory:"Expresiones cuadráticas irreducibles en el denominador conducen directamente a arcsen, arctan o arcsec.",example:["Resolver ∫ dx / (9 + 4x²) = (1/6) arctan(2x / 3) + C."],toolType:"check"},
-{id:12,num:"MÓDULO 12",title:"Hiperbólicas Inversas",desc:"Integrales asociadas a arcsinh, arccosh y arctanh.",tags:["hiperbólicas"],formula:"∫ du/√(u² + a²) = arcsinh(u/a) + C = ln|u + √(u² + a²)| + C",theory:"Ofrecen una forma compacta para integrar raíces de suma o diferencia de cuadrados, equivalentes a logaritmos.",example:["Resolver ∫ dx / √(x² + 16) = arcsinh(x / 4) + C."],toolType:"check"},
-{id:13,num:"MÓDULO 13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados para integrandos cuadráticos.",tags:["trinomio"],formula:"ax² + bx + c = a(x + b / 2a)² + (c - b² / 4a)",theory:"Se completa el cuadrado perfecto para reducir un trinomio cuadrático a la forma u² ± a².",example:["x² + 6x + 13 = (x + 3)² + 2² → ∫ dx/(x²+6x+13) = (1/2)arctan((x+3)/2) + C."],toolType:"square-completer"},
-{id:14,num:"MÓDULO 14",title:"Integración por Partes",desc:"La fórmula ∫u dv = uv - ∫v du y la estrategia LIATE.",tags:["por partes"],formula:"∫ u dv = u · v - ∫ v du",theory:"Permite integrar productos de funciones usando prioridad LIATE (Logarítmicas, Inversas, Algebraicas, Trigonométricas, Exponenciales) para elegir u.",example:["Resolver ∫ x · e^x dx: con u = x y dv = e^x dx → e^x(x - 1) + C."],toolType:"liate"}
+{id:1,num:"M1",title:"Riemann",desc:"Suma izquierda, derecha y punto medio: la aproximación del área como límite.",tags:["aproximación","límite","particiones"],formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ],   donde Δx = (b - a) / n",theory:"Las sumas de Riemann permiten aproximar el área bajo una curva f(x) en un intervalo cerrado [a, b] dividiéndolo en n subintervalos de ancho Δx.",example:["Sea f(x) = x² en [0, 2] con n = 4 subintervalos.","Ancho de cada rectángulo: Δx = (2 - 0) / 4 = 0.5.","Suma derecha: 0.5 · [f(0.5) + f(1.0) + f(1.5) + f(2.0)] = 3.75.","Valor exacto: ∫₀² x² dx = 8/3 ≈ 2.6667."],toolType:"numeric",defaultMethod:"riemann-left"},
+{id:2,num:"M2",title:"Trapecio",desc:"Aproximación con trapecios y su justificación geométrica.",tags:["cuadratura","trapecios"],formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + ... + 2f(x_{n-1}) + f(x_n) ]",theory:"Une los puntos consecutivos de la curva mediante segmentos rectos, formando trapecios cuya área promedio reduce notablemente el error.",example:["Aproximar ∫₀² x² dx con n = 4 trapecios (Δx = 0.5).","T₄ = 0.25 · [0 + 2(0.25) + 2(1) + 2(2.25) + 4] = 2.75."],toolType:"numeric",defaultMethod:"trapezoid"},
+{id:3,num:"M3",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",tags:["cuadratura","rectángulos"],formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa la altura en el centro geométrico de cada subintervalo logrando mayor precisión.",example:["Aproximar ∫₀² x² dx con n = 4 (Δx = 0.5). Puntos medios: 0.25, 0.75, 1.25, 1.75. M₄ = 2.625."],toolType:"numeric",defaultMethod:"midpoint"},
+{id:4,num:"M4",title:"Regla de Simpson",desc:"Parábolas ajustadas por tramos y la condición de n par.",tags:["cuadratura","parábolas"],formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + ... + f(x_n) ]   (n par)",theory:"Reemplaza los segmentos lineales por arcos parabólicos que pasan por tres puntos consecutivos.",example:["Aproximar ∫₀² x² dx con n = 4 (par). S₄ = (1/6) · 16 = 2.6667 (exacto)."],toolType:"numeric",defaultMethod:"simpson"},
+{id:5,num:"M5",title:"Integral Definida y Área",desc:"Teorema Fundamental del Cálculo y área entre curvas.",tags:["TFC","área"],formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A_entre = ∫_a^b [ f(x) - g(x) ] dx",theory:"Conecta la derivación con la integración y permite calcular áreas netas entre funciones.",example:["Área entre f(x) = 4 - x² y g(x) = x² en [-√2, √2] es (16/3)√2 ≈ 7.5425 u²."],toolType:"area"},
+{id:6,num:"M6",title:"Integración Directa",desc:"Compendio de fórmulas básicas y relación entre f(x) y F(x).",tags:["antiderivadas","fórmulas"],formula:"∫ x^n dx = x^{n+1} / (n + 1) + C   (n ≠ -1)",theory:"Busca la familia de primitivas F(x) + C cuya derivada reproduce f(x).",example:["Calcular ∫ (5x⁴ - 3x² + 7) dx = x⁵ - x³ + 7x + C."],toolType:"table"},
+{id:7,num:"M7",title:"Sustitución / Potencias",desc:"Método de sustitución y la regla de la potencia generalizada.",tags:["sustitución"],formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du,   donde u = g(x)",theory:"Es la regla de la cadena en sentido inverso mediante el cambio de variable u = g(x).",example:["Resolver ∫ 2x · (x² + 3)⁵ dx = (x² + 3)⁶ / 6 + C."],toolType:"check"},
+{id:8,num:"M8",title:"Integrales Exponenciales",desc:"Integrales con base e y bases arbitrarias.",tags:["exponencial"],formula:"∫ e^u du = e^u + C   |   ∫ a^u du = a^u / ln(a) + C",theory:"La función exponencial natural es invariante; para bases a ≠ 1 se divide por ln(a).",example:["Resolver ∫ (e^{3x} + 2^x) dx = (1/3)e^{3x} + 2^x / ln(2) + C."],toolType:"check"},
+{id:9,num:"M9",title:"Integrales Logarítmicas",desc:"Formas que conducen al logaritmo natural.",tags:["logaritmo"],formula:"∫ (1 / u) du = ln|u| + C   |   ∫ (f'(x) / f(x)) dx = ln|f(x)| + C",theory:"Cuando el numerador es la derivada del denominador, la antiderivada es el logaritmo natural.",example:["Resolver ∫ (4x / (x² + 5)) dx = 2 · ln(x² + 5) + C."],toolType:"check"},
+{id:10,num:"M10",title:"Integrales Trigonométricas",desc:"Potencias y productos de funciones trigonométricas.",tags:["trigonometría"],formula:"sen²(x) + cos²(x) = 1   |   sen²(x) = (1 - cos(2x))/2",theory:"Se usan identidades pitagóricas y de ángulo medio para simplificar productos trigonométricos.",example:["Resolver ∫ sen³(x) · cos²(x) dx = -cos³(x)/3 + cos⁵(x)/5 + C."],toolType:"check"},
+{id:11,num:"M11",title:"Trigonométricas Inversas",desc:"Formas que producen arcsen, arctan y arcsec.",tags:["inversas"],formula:"∫ du/√(a² - u²) = arcsen(u/a) + C   |   ∫ du/(a² + u²) = (1/a)arctan(u/a) + C",theory:"Expresiones cuadráticas en el denominador conducen directamente a arcsen o arctan.",example:["Resolver ∫ dx / (9 + 4x²) = (1/6) arctan(2x / 3) + C."],toolType:"check"},
+{id:12,num:"M12",title:"Hiperbólicas Inversas",desc:"Integrales asociadas a arcsinh, arccosh y arctanh.",tags:["hiperbólicas"],formula:"∫ du/√(u² + a²) = arcsinh(u/a) + C",theory:"Alternativa elegante para raíces de sumas o diferencias de cuadrados.",example:["Resolver ∫ dx / √(x² + 16) = arcsinh(x / 4) + C."],toolType:"check"},
+{id:13,num:"M13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados para integrandos cuadráticos.",tags:["trinomio"],formula:"ax² + bx + c = a(x + b / 2a)² + (c - b² / 4a)",theory:"Se completa el trinomio cuadrado perfecto para reducirlo a formas estándar u² ± a².",example:["x² + 6x + 13 = (x + 3)² + 2² → (1/2) arctan((x + 3) / 2) + C."],toolType:"square-completer"},
+{id:14,num:"M14",title:"Integración por Partes",desc:"La fórmula ∫u dv = uv - ∫v du y la estrategia LIATE.",tags:["por partes"],formula:"∫ u dv = u · v - ∫ v du",theory:"Permite integrar productos usando la prioridad LIATE para elegir u.",example:["Resolver ∫ x · e^x dx = e^x(x - 1) + C."],toolType:"liate"}
 ];
 const container=document.getElementById("modulesContainer");
-function renderModules(list){container.innerHTML="";list.forEach(mod=>{const card=document.createElement("div");card.className="module-card";card.onclick=()=>openModule(mod.id);card.innerHTML=`<div class="card-top"><span class="module-num">${mod.num}</span><span class="badge-active">&#128214; Activo</span></div><h2 class="module-title">${mod.title}</h2><p class="module-desc">${mod.desc}</p><div class="tags">${mod.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`;container.appendChild(card);});}
-function filterModules(){const q=document.getElementById("searchInput").value.toLowerCase();renderModules(modulesData.filter(m=>m.title.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q)||m.tags.some(t=>t.toLowerCase().includes(q))||m.num.toLowerCase().includes(q)));}
-function showHome(){document.getElementById("detail-view").style.display="none";document.getElementById("home-view").style.display="block";window.scrollTo({top:0,behavior:"smooth"});}
+function renderModules(list){
+  container.innerHTML="";
+  list.forEach(mod=>{
+    const card=document.createElement("div");
+    card.className="module-card";
+    card.onclick=()=>openModule(mod.id);
+    card.innerHTML=`
+      <div class="module-num">${mod.num}</div>
+      <h2 class="module-title">${mod.title}</h2>
+      <span class="badge-fase">Fase 1</span>
+    `;
+    container.appendChild(card);
+  });
+}
+function filterModules(){
+  const q=document.getElementById("searchInput").value.toLowerCase();
+  renderModules(modulesData.filter(m=>m.title.toLowerCase().includes(q)||m.num.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q)));
+}
+function showHome(){
+  document.getElementById("detail-view").style.display="none";
+  document.getElementById("home-view").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 function openModule(id){
   const mod=modulesData.find(m=>m.id===id);if(!mod)return;
-  document.getElementById("home-view").style.display="none";document.getElementById("detail-view").style.display="block";
+  document.getElementById("home-view").style.display="none";
+  document.getElementById("detail-view").style.display="block";
   let tool="";
-  if(mod.toolType==="numeric"){tool=`<div class="tool-panel"><strong>Simulador Gráfico de Cuadratura Numérica</strong><div class="controls-grid" style="margin-top:10px;"><div class="control-group"><label>Función f(x)</label><select id="fnSelect" onchange="updateNumericPlot()"><option value="x2">f(x) = x²</option><option value="sin">f(x) = sen(x) + 1.5</option><option value="cub">f(x) = 0.5x³ - x + 2</option></select></div><div class="control-group"><label>Método</label><select id="methodSelect" onchange="updateNumericPlot()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3 (n par)</option></select></div><div class="control-group"><label>Subintervalos (n): <span id="nVal">6</span></label><input type="range" id="nSlider" min="2" max="20" step="2" value="6" oninput="document.getElementById('nVal').innerText=this.value;updateNumericPlot()"></div></div><canvas id="plotCanvas" width="700" height="260"></canvas><div class="result-banner"><span>Aproximación: <strong id="approxOut">0.0000</strong></span><span>Integral Exacta [0, 2]: <strong id="exactOut">0.0000</strong></span><span>Error: <strong id="errOut">0.0000</strong></span></div></div>`;}
-  else if(mod.toolType==="area"){tool=`<div class="tool-panel"><strong>Visualizador de Área entre f(x) = 4 - x² y g(x) = x²</strong><div class="controls-grid" style="margin-top:10px;"><div class="control-group"><label>Límite inferior (a)</label><input type="number" id="limA" value="-1.41" step="0.1" onchange="drawAreaBetween()"></div><div class="control-group"><label>Límite superior (b)</label><input type="number" id="limB" value="1.41" step="0.1" onchange="drawAreaBetween()"></div></div><canvas id="areaCanvas" width="700" height="250"></canvas><div class="result-banner"><span>Área neta ∫ [f(x) - g(x)] dx = <strong id="areaBetweenOut">7.5425</strong> u²</span></div></div>`;}
-  else if(mod.toolType==="table"){tool=`<div class="tool-panel"><strong>Compendio Rápido de Antiderivadas Inmediatas</strong><table class="formula-table"><thead><tr><th>Función f(x)</th><th>Antiderivada F(x) + C</th></tr></thead><tbody><tr><td>k (constante)</td><td>k·x + C</td></tr><tr><td>x^n (n ≠ -1)</td><td>x^(n+1) / (n + 1) + C</td></tr><tr><td>1 / x</td><td>ln|x| + C</td></tr><tr><td>e^x</td><td>e^x + C</td></tr><tr><td>sen(x)</td><td>-cos(x) + C</td></tr><tr><td>cos(x)</td><td>sen(x) + C</td></tr><tr><td>sec²(x)</td><td>tan(x) + C</td></tr></tbody></table></div>`;}
-  else if(mod.toolType==="square-completer"){tool=`<div class="tool-panel"><strong>Asistente de Completación de Cuadrados: ax² + bx + c</strong><div class="controls-grid" style="margin-top:10px;"><div class="control-group"><label>Coeficiente a</label><input type="number" id="sqA" value="1" oninput="calcSquare()"></div><div class="control-group"><label>Coeficiente b</label><input type="number" id="sqB" value="6" oninput="calcSquare()"></div><div class="control-group"><label>Término c</label><input type="number" id="sqC" value="13" oninput="calcSquare()"></div></div><div class="formula-box" id="sqResult">1(x + 3)² + 4</div></div>`;}
-  else if(mod.toolType==="liate"){tool=`<div class="tool-panel"><strong>Selector de Estrategia LIATE</strong><select id="liateSelect" class="search-input" style="margin-top:8px;" onchange="updateLiate()"><option value="0">∫ x · ln(x) dx</option><option value="1">∫ x² · sen(x) dx</option><option value="2">∫ arctan(x) dx</option><option value="3">∫ e^x · cos(x) dx</option></select><div class="formula-box" id="liateOut">u = ln(x) [Logarítmica] → du = (1/x) dx | dv = x dx [Algebraica] → v = x²/2</div></div>`;}
-  else{tool=`<div class="tool-panel"><strong>Verificación Rápida</strong><p style="font-size:13.5px;color:var(--text-muted);margin-top:4px;">Comprueba siempre derivando tu respuesta: si <strong>d/dx [F(x) + C] = f(x)</strong>, el resultado es exacto.</p></div>`;}
-  document.getElementById("detailContent").innerHTML=`<div class="card-top"><span class="module-num">${mod.num}</span><span class="badge-active">&#128214; Activo</span></div><h2 class="module-title" style="font-size:24px;">${mod.title}</h2><p class="module-desc">${mod.desc}</p><h3 class="section-h3">Fórmula Fundamental</h3><div class="formula-box">${mod.formula}</div><h3 class="section-h3">Fundamento Teórico</h3><p style="font-size:14.5px;">${mod.theory}</p><h3 class="section-h3">Ejemplo Resuelto Paso a Paso</h3><ol class="step-list">${mod.example.map(s=>`<li>${s}</li>`).join("")}</ol>${tool}`;
+  if(mod.toolType==="numeric"){tool=`<div class="tool-panel"><strong>Simulador Gráfico</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>Función f(x)</label><select id="fnSelect" onchange="updateNumericPlot()"><option value="x2">f(x) = x²</option><option value="sin">f(x) = sen(x) + 1.5</option><option value="cub">f(x) = 0.5x³ - x + 2</option></select></div><div class="control-group"><label>Método</label><select id="methodSelect" onchange="updateNumericPlot()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3</option></select></div><div class="control-group"><label>Particiones n: <span id="nVal">6</span></label><input type="range" id="nSlider" min="2" max="20" step="2" value="6" oninput="document.getElementById('nVal').innerText=this.value;updateNumericPlot()"></div></div><canvas id="plotCanvas" width="700" height="250"></canvas><div class="result-banner"><span>Aprox: <strong id="approxOut">0.00</strong></span><span>Exacta: <strong id="exactOut">0.00</strong></span><span>Error: <strong id="errOut">0.00</strong></span></div></div>`;}
+  else if(mod.toolType==="area"){tool=`<div class="tool-panel"><strong>Visualizador de Área</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>Límite a</label><input type="number" id="limA" value="-1.41" step="0.1" onchange="drawAreaBetween()"></div><div class="control-group"><label>Límite b</label><input type="number" id="limB" value="1.41" step="0.1" onchange="drawAreaBetween()"></div></div><canvas id="areaCanvas" width="700" height="240"></canvas><div class="result-banner"><span>Área = <strong id="areaBetweenOut">7.54</strong> u²</span></div></div>`;}
+  else if(mod.toolType==="table"){tool=`<div class="tool-panel"><strong>Fórmulas Inmediatas</strong><table class="formula-table"><thead><tr><th>f(x)</th><th>F(x) + C</th></tr></thead><tbody><tr><td>k</td><td>k·x</td></tr><tr><td>x^n</td><td>x^(n+1)/(n+1)</td></tr><tr><td>1/x</td><td>ln|x|</td></tr><tr><td>e^x</td><td>e^x</td></tr><tr><td>sen(x)</td><td>-cos(x)</td></tr></tbody></table></div>`;}
+  else if(mod.toolType==="square-completer"){tool=`<div class="tool-panel"><strong>Completar Cuadrados</strong><div class="controls-grid" style="margin-top:8px;"><div class="control-group"><label>a</label><input type="number" id="sqA" value="1" oninput="calcSquare()"></div><div class="control-group"><label>b</label><input type="number" id="sqB" value="6" oninput="calcSquare()"></div><div class="control-group"><label>c</label><input type="number" id="sqC" value="13" oninput="calcSquare()"></div></div><div class="formula-box" id="sqResult">1(x + 3)² + 4</div></div>`;}
+  else if(mod.toolType==="liate"){tool=`<div class="tool-panel"><strong>Estrategia LIATE</strong><select id="liateSelect" class="search-input" style="margin-top:6px;" onchange="updateLiate()"><option value="0">∫ x · ln(x) dx</option><option value="1">∫ x² · sen(x) dx</option><option value="2">∫ arctan(x) dx</option></select><div class="formula-box" id="liateOut">u = ln(x) → du = (1/x)dx | dv = x dx → v = x²/2</div></div>`;}
+  else{tool=`<div class="tool-panel"><strong>Verificación</strong><p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Deriva tu resultado para comprobar que d/dx[F(x)] = f(x).</p></div>`;}
+  
+  document.getElementById("detailContent").innerHTML=`
+    <div class="module-num">${mod.num}</div>
+    <h2 class="module-title" style="font-size:22px;">${mod.title}</h2>
+    <span class="badge-fase" style="margin-bottom:14px;">Fase 1</span>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">${mod.desc}</p>
+    <h3 class="section-h3">Fórmula</h3>
+    <div class="formula-box">${mod.formula}</div>
+    <h3 class="section-h3">Teoría</h3>
+    <p style="font-size:14px;">${mod.theory}</p>
+    <h3 class="section-h3">Ejemplo Paso a Paso</h3>
+    <ol class="step-list">${mod.example.map(s=>`<li>${s}</li>`).join("")}</ol>
+    ${tool}
+  `;
   if(mod.toolType==="numeric")setTimeout(updateNumericPlot,30);
   if(mod.toolType==="area")setTimeout(drawAreaBetween,30);
   window.scrollTo({top:0,behavior:"smooth"});
@@ -103,10 +131,10 @@ function updateNumericPlot(){
   const c=document.getElementById("plotCanvas");if(!c)return;const ctx=c.getContext("2d");
   const fn=document.getElementById("fnSelect").value,m=document.getElementById("methodSelect").value,n=parseInt(document.getElementById("nSlider").value,10);
   const a=0,b=2,dx=(b-a)/n;ctx.clearRect(0,0,c.width,c.height);
-  const padL=45,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB,maxY=4.5;
+  const padL=40,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB,maxY=4.5;
   const toX=x=>padL+((x-a)/(b-a))*W,toY=y=>padT+H-(y/maxY)*H;
   ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(padL,padT);ctx.lineTo(padL,padT+H);ctx.lineTo(padL+W,padT+H);ctx.stroke();
-  let approx=0;ctx.fillStyle="rgba(15,76,92,0.22)";ctx.strokeStyle="#0f4c5c";ctx.lineWidth=1.5;
+  let approx=0;ctx.fillStyle="rgba(30,64,175,0.2)";ctx.strokeStyle="#1e40af";ctx.lineWidth=1.5;
   if(m==="riemann-left"||m==="riemann-right"||m==="midpoint"){
     for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,sx=m==="riemann-right"?x1:m==="midpoint"?(x0+x1)/2:x0,h=evalFn(fn,sx);approx+=h*dx;ctx.fillRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));ctx.strokeRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));}
   }else if(m==="trapezoid"){
@@ -120,17 +148,17 @@ function updateNumericPlot(){
 function drawAreaBetween(){
   const c=document.getElementById("areaCanvas");if(!c)return;const ctx=c.getContext("2d");
   const a=parseFloat(document.getElementById("limA").value)||-1.41,b=parseFloat(document.getElementById("limB").value)||1.41;
-  ctx.clearRect(0,0,c.width,c.height);const toX=x=>c.width/2+x*120,toY=y=>c.height-30-y*42;
-  ctx.fillStyle="rgba(15,76,92,0.25)";ctx.beginPath();
+  ctx.clearRect(0,0,c.width,c.height);const toX=x=>c.width/2+x*120,toY=y=>c.height-25-y*40;
+  ctx.fillStyle="rgba(30,64,175,0.2)";ctx.beginPath();
   for(let i=0;i<=100;i++){const x=a+(i/100)*(b-a);i===0?ctx.moveTo(toX(x),toY(4-x*x)):ctx.lineTo(toX(x),toY(4-x*x));}
   for(let i=100;i>=0;i--){const x=a+(i/100)*(b-a);ctx.lineTo(toX(x),toY(x*x));}
   ctx.closePath();ctx.fill();
-  ctx.strokeStyle="#0f4c5c";ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.2;x<=2.2;x+=0.05)x===-2.2?ctx.moveTo(toX(x),toY(4-x*x)):ctx.lineTo(toX(x),toY(4-x*x));ctx.stroke();
+  ctx.strokeStyle="#1e40af";ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.2;x<=2.2;x+=0.05)x===-2.2?ctx.moveTo(toX(x),toY(4-x*x)):ctx.lineTo(toX(x),toY(4-x*x));ctx.stroke();
   ctx.strokeStyle="#d97706";ctx.beginPath();for(let x=-2.2;x<=2.2;x+=0.05)x===-2.2?ctx.moveTo(toX(x),toY(x*x)):ctx.lineTo(toX(x),toY(x*x));ctx.stroke();
   const F=x=>4*x-(2/3)*Math.pow(x,3);document.getElementById("areaBetweenOut").innerText=Math.abs(F(b)-F(a)).toFixed(4);
 }
 function calcSquare(){const a=parseFloat(document.getElementById("sqA").value)||1,b=parseFloat(document.getElementById("sqB").value)||0,c=parseFloat(document.getElementById("sqC").value)||0,h=b/(2*a),k=c-(b*b)/(4*a);document.getElementById("sqResult").innerText=`${a}(x ${h>=0?'+ '+h.toFixed(2):'- '+Math.abs(h).toFixed(2)})² ${k>=0?'+ '+k.toFixed(2):'- '+Math.abs(k).toFixed(2)}`;}
-function updateLiate(){const cases=["u = ln(x) [Logarítmica] → du = (1/x) dx | dv = x dx [Algebraica] → v = x²/2","u = x² [Algebraica] → du = 2x dx | dv = sen(x) dx [Trigonométrica] → v = -cos(x)","u = arctan(x) [Inversa Trig.] → du = dx/(1 + x²) | dv = 1 dx [Algebraica] → v = x","u = cos(x) [Trigonométrica] → du = -sen(x) dx | dv = e^x dx [Exponencial] → v = e^x"];document.getElementById("liateOut").innerText=cases[document.getElementById("liateSelect").value];}
+function updateLiate(){const cases=["u = ln(x) → du = (1/x)dx | dv = x dx → v = x²/2","u = x² → du = 2x dx | dv = sen(x)dx → v = -cos(x)","u = arctan(x) → du = dx/(1+x²) | dv = dx → v = x"];document.getElementById("liateOut").innerText=cases[document.getElementById("liateSelect").value];}
 renderModules(modulesData);
 </script>
 </body>
