@@ -13,7 +13,6 @@ body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:
 .container{max-width:860px;margin:0 auto;padding:0 16px}
 .section-title{font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:12px}
 .search-input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;outline:none;margin-bottom:18px}
-.search-input:focus{border-color:var(--primary-mid)}
 .modules-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s ease}
 .module-card:hover{transform:translateY(-3px);border-color:var(--primary-mid)}
@@ -26,13 +25,11 @@ body{background:var(--bg);color:var(--text-main);line-height:1.6;padding-bottom:
 .formula-box{background:#f8fafc;border-left:4px solid var(--primary-mid);padding:14px 16px;border-radius:8px;font-family:"Courier New",monospace;font-size:14.5px;font-weight:700;color:var(--primary);margin:12px 0;overflow-x:auto}
 .section-h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--text-main);border-bottom:1px solid #e2e8f0;padding-bottom:4px}
 .lab-panel{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:18px}
-.lab-header{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lab-header{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px}
 .controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:14px}
 .control-group label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
 .control-group select,.control-group input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:13.5px;font-weight:600}
 canvas{width:100%;height:280px;background:#fff;border:1px solid var(--border);border-radius:10px;display:block;margin:12px 0}
-.legend-bar{display:flex;gap:16px;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;flex-wrap:wrap}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
 .result-banner{background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;font-size:13.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:10px}
 .dynamic-steps{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:13.5px}
 .dynamic-steps h4{font-size:13.5px;color:var(--primary);margin-bottom:8px}
@@ -44,36 +41,39 @@ footer{text-align:center;margin-top:34px;font-size:13px;color:var(--text-muted)}
 <body>
 <div class="hero-header" onclick="showHome()">
   <h1>Plataforma de Cálculo Integral</h1>
-  <p>Universidad Tecnológica de Pereira &middot; Laboratorio Interactivo</p>
+  <p>Universidad Tecnológica de Pereira &middot; Sólidos de Revolución y Aplicaciones</p>
 </div>
 <main class="container">
   <div id="home-view">
-    <div class="section-title">Módulos del Proyecto (14 Módulos)</div>
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo o método (ej: Riemann, Simpson, Sustitución, Partes)..." onkeyup="filterModules()">
+    <div class="section-title">Módulos del Proyecto (Hasta Sólidos de Revolución)</div>
+    <input type="text" id="searchInput" class="search-input" placeholder="Buscar módulo (ej: Riemann, Discos, Arandelas, Capas, Partes)..." onkeyup="filterModules()">
     <div class="modules-list" id="modulesContainer"></div>
   </div>
   <div id="detail-view">
-    <button class="back-btn" onclick="showHome()">&larr; Volver a los 14 Módulos</button>
+    <button class="back-btn" onclick="showHome()">&larr; Volver al Inicio</button>
     <div class="detail-box" id="detailContent"></div>
   </div>
-  <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; 14 Módulos Interactivos</footer>
+  <footer>Universidad Tecnológica de Pereira &middot; Ingeniería &middot; Plataforma Interactiva</footer>
 </main>
 <script>
 const modulesData=[
-{id:1,num:"M1",title:"Sumas de Riemann",desc:"Suma izquierda, derecha y punto medio: aproximación del área bajo la curva como límite.",formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ],   con Δx = (b - a) / n",theory:"Divide el intervalo [a, b] en n subintervalos de ancho uniforme Δx. Dependiendo del punto muestra x_i* (extremo izquierdo, derecho o centro), se construyen rectángulos cuya suma converge a la integral definida cuando n → ∞.",labMode:"numeric",defaultMethod:"riemann-left"},
-{id:2,num:"M2",title:"Regla del Trapecio",desc:"Aproximación mediante trapecios inscritos y justificación geométrica del error.",formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + 2f(x_2) + ... + 2f(x_{n-1}) + f(x_n) ]",theory:"Sustituye los techos horizontales de Riemann por segmentos secantes que unen puntos consecutivos de f(x), formando trapecios que se ajustan mucho mejor a la pendiente de la curva.",labMode:"numeric",defaultMethod:"trapezoid"},
-{id:3,num:"M3",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa f(x) en el centro geométrico de cada subintervalo. El error por exceso en la mitad del rectángulo compensa casi exactamente el error por defecto en la otra mitad.",labMode:"numeric",defaultMethod:"midpoint"},
-{id:4,num:"M4",title:"Regla de Simpson",desc:"Ajuste cuadrático por arcos parabólicos y condición obligatoria de n par.",formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + ... + 4f(x_{n-1}) + f(x_n) ]  (n par)",theory:"Interpola cada trío de puntos consecutivos mediante una parábola de segundo grado. Exige que n sea par y produce precisión exacta para cualquier polinomio cúbico.",labMode:"numeric",defaultMethod:"simpson"},
-{id:5,num:"M5",title:"Integral Definida y Área",desc:"Teorema Fundamental del Cálculo y cálculo de área encerrada entre dos curvas.",formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A = ∫_a^b [ f_sup(x) - g_inf(x) ] dx",theory:"El Segundo Teorema Fundamental del Cálculo permite evaluar áreas exactas mediante la diferencia de primitivas F(b) - F(a). Entre dos curvas se integra la función superior menos la inferior.",labMode:"area"},
-{id:6,num:"M6",title:"Integración Directa",desc:"Linealidad, regla de la potencia y relación gráfica entre f(x) y su antiderivada F(x).",formula:"∫ [ k·x^n + m·x^p ] dx = k·x^{n+1}/(n+1) + m·x^{p+1}/(p+1) + C",theory:"La integral indefinida encuentra la familia de funciones F(x) + C cuya derivada es el integrando f(x). Geométricamente, F(x) representa la acumulación de área desde un punto fijo.",labMode:"symbolic",subType:"direct"},
-{id:7,num:"M7",title:"Sustitución / Potencias",desc:"Cambio de variable u = g(x) y regla de la cadena inversa.",formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du = F(g(x)) + C",theory:"Identifica una función interna u = g(x) acompañada de su diferencial du = g'(x) dx para reducir una integral compuesta a una potencia inmediata.",labMode:"symbolic",subType:"subst"},
-{id:8,num:"M8",title:"Integrales Exponenciales",desc:"Integración de funciones con base natural e y bases arbitrarias a > 0.",formula:"∫ k·e^{a·x} dx = (k/a)·e^{a·x} + C   |   ∫ b^{a·x} dx = b^{a·x} / (a·ln(b)) + C",theory:"La función exponencial mantiene su estructura al integrarse, dividiendo únicamente por la derivada interna del exponente (y por ln(b) si la base no es e).",labMode:"symbolic",subType:"exp"},
-{id:9,num:"M9",title:"Integrales Logarítmicas",desc:"Formas racionales f'(x)/f(x) que conducen al logaritmo natural.",formula:"∫ (k / (a·x + b)) dx = (k / a) · ln|a·x + b| + C",theory:"Resuelve el caso crítico de potencia n = -1. Siempre que el numerador sea proporcional a la derivada del denominador, la primitiva es logarítmica.",labMode:"symbolic",subType:"log"},
-{id:10,num:"M10",title:"Integrales Trigonométricas",desc:"Potencias y productos de seno y coseno mediante identidades.",formula:"∫ sen(a·x) dx = -(1/a)cos(a·x) + C   |   ∫ cos(a·x) dx = (1/a)sen(a·x) + C",theory:"Combina identidades pitagóricas (sen²x + cos²x = 1) y reducción de ángulo doble para transformar potencias trigonométricas en integrales directas.",labMode:"symbolic",subType:"trig"},
-{id:11,num:"M11",title:"Trigonométricas Inversas",desc:"Formas radicales y racionales que producen arcsen(u/a) y arctan(u/a).",formula:"∫ dx / (a² + x²) = (1/a) arctan(x/a) + C   |   ∫ dx / √(a² - x²) = arcsen(x/a) + C",theory:"Cuando el denominador presenta sumas o diferencias de cuadrados irreducibles, la sustitución trigonométrica genera funciones ciclométricas inversas.",labMode:"symbolic",subType:"invtrig"},
-{id:12,num:"M12",title:"Hiperbólicas Inversas",desc:"Integrales con radicales cuadráticos asociadas a arcsinh y arccosh.",formula:"∫ dx / √(x² + a²) = arcsinh(x/a) + C = ln|x + √(x² + a²)| + C",theory:"Proporciona una representación directa y logarítmica para integrandos con raíces de la forma √(u² ± a²).",labMode:"symbolic",subType:"hyp"},
-{id:13,num:"M13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados para reducir denominadores cuadráticos.",formula:"ax² + bx + c = a(x + b/2a)² + (c - b²/4a)",theory:"Transforma cualquier trinomio cuadrático general en una suma o diferencia de cuadrados perfecta para aplicar luego arctan, arcsen o logaritmos.",labMode:"symbolic",subType:"trinom"},
-{id:14,num:"M14",title:"Integración por Partes",desc:"Descomposición ∫u dv = uv - ∫v du y jerarquía LIATE.",formula:"∫ u dv = u · v - ∫ v du",theory:"Permite integrar productos de dos familias distintas de funciones. La regla LIATE (Logarítmica, Inversa, Algebraica, Trigonométrica, Exponencial) determina la elección óptima de u.",labMode:"symbolic",subType:"parts"}
+{id:1,num:"M1",title:"Sumas de Riemann",desc:"Aproximación del área bajo la curva como límite de particiones.",formula:"A = lim (n→∞) Σ [ f(x_i*) · Δx ]",theory:"Divide el intervalo [a, b] en n subintervalos de ancho Δx, construyendo rectángulos cuya suma converge a la integral definida.",labMode:"numeric",defaultMethod:"riemann-left"},
+{id:2,num:"M2",title:"Regla del Trapecio",desc:"Aproximación mediante trapecios inscritos.",formula:"T_n = (Δx / 2) · [ f(x_0) + 2f(x_1) + ... + f(x_n) ]",theory:"Sustituye los techos horizontales por segmentos rectos que unen puntos consecutivos de la curva.",labMode:"numeric",defaultMethod:"trapezoid"},
+{id:3,num:"M3",title:"Regla del Punto Medio",desc:"Rectángulos centrados en el punto medio de cada subintervalo.",formula:"M_n = Δx · Σ f( (x_{i-1} + x_i) / 2 )",theory:"Evalúa f(x) en el centro geométrico de cada partición para minimizar el error de aproximación.",labMode:"numeric",defaultMethod:"midpoint"},
+{id:4,num:"M4",title:"Regla de Simpson",desc:"Ajuste cuadrático por arcos parabólicos (n par).",formula:"S_n = (Δx / 3) · [ f(x_0) + 4f(x_1) + 2f(x_2) + ... + f(x_n) ]",theory:"Interpola tríos consecutivos mediante parábolas, obteniendo resultados exactos para polinomios cúbicos.",labMode:"numeric",defaultMethod:"simpson"},
+{id:5,num:"M5",title:"Integral Definida y Área",desc:"Teorema Fundamental del Cálculo y área entre curvas.",formula:"∫_a^b f(x) dx = F(b) - F(a)   |   A = ∫_a^b [ f(x) - g(x) ] dx",theory:"Conecta la derivación con la integración y calcula áreas exactas restando la función superior menos la inferior.",labMode:"area"},
+{id:6,num:"M6",title:"Integración Directa",desc:"Linealidad y reglas inmediatas de antiderivadas.",formula:"∫ x^n dx = x^{n+1}/(n+1) + C  (n ≠ -1)",theory:"Busca la familia de primitivas F(x) + C cuya derivada reproduce el integrando f(x).",labMode:"symbolic",subType:"direct"},
+{id:7,num:"M7",title:"Sustitución / Potencias",desc:"Cambio de variable u = g(x) y regla de la cadena inversa.",formula:"∫ f(g(x)) · g'(x) dx = ∫ f(u) du",theory:"Reduce integrales compuestas identificando una función interna y su respectivo diferencial.",labMode:"symbolic",subType:"subst"},
+{id:8,num:"M8",title:"Integrales Exponenciales",desc:"Funciones con base e y bases arbitrarias.",formula:"∫ e^(a·x) dx = (1/a)e^(a·x) + C",theory:"La exponencial natural se mantiene invariable salvo el factor de escala de su exponente.",labMode:"symbolic",subType:"exp"},
+{id:9,num:"M9",title:"Integrales Logarítmicas",desc:"Formas racionales que conducen al logaritmo natural.",formula:"∫ (f'(x) / f(x)) dx = ln|f(x)| + C",theory:"Resuelve el caso n = -1 cuando el numerador es proporcional a la derivada del denominador.",labMode:"symbolic",subType:"log"},
+{id:10,num:"M10",title:"Integrales Trigonométricas",desc:"Potencias y productos de funciones trigonométricas.",formula:"∫ sen(x) dx = -cos(x) + C   |   ∫ cos(x) dx = sen(x) + C",theory:"Utiliza identidades pitagóricas y de ángulo medio para simplificar expresiones trigonométricas.",labMode:"symbolic",subType:"trig"},
+{id:11,num:"M11",title:"Trigonométricas Inversas",desc:"Formas que generan arcsen y arctan.",formula:"∫ dx / (a² + x²) = (1/a) arctan(x/a) + C",theory:"Integra expresiones con denominadores cuadráticos irreducibles mediante funciones ciclométricas.",labMode:"symbolic",subType:"invtrig"},
+{id:12,num:"M12",title:"Hiperbólicas Inversas",desc:"Integrales con radicales asociadas a arcsinh.",formula:"∫ dx / √(x² + a²) = arcsinh(x/a) + C",theory:"Alternativa logarítmica y compacta para radicales de suma o resta de cuadrados.",labMode:"symbolic",subType:"hyp"},
+{id:13,num:"M13",title:"Trinomio ax² + bx + c",desc:"Completación de cuadrados en el denominador.",formula:"ax² + bx + c = a(x + b/2a)² + (c - b²/4a)",theory:"Reduce trinomios generales a formas canónicas u² ± a² para aplicar fórmulas directas.",labMode:"symbolic",subType:"trinom"},
+{id:14,num:"M14",title:"Integración por Partes",desc:"Fórmula ∫u dv = uv - ∫v du y jerarquía LIATE.",formula:"∫ u dv = u · v - ∫ v du",theory:"Integra productos de funciones de distinta naturaleza priorizando Logarítmicas, Inversas, Algebraicas, Trigonométricas y Exponenciales.",labMode:"symbolic",subType:"parts"},
+{id:15,num:"M15",title:"Sólidos de Revolución: Discos",desc:"Cálculo de volumen rotando una función alrededor del eje x.",formula:"V = π ∫_a^b [f(x)]² dx",theory:"Imagina el sólido rebanado en discos circulares infinitos de radio r = f(x) y espesor dx.",labMode:"solid-disk"},
+{id:16,num:"M16",title:"Sólidos de Revolución: Arandelas",desc:"Volumen de sólidos huecos limitados por dos funciones f(x) y g(x).",formula:"V = π ∫_a^b ( [f(x)]² - [g(x)]² ) dx",theory:"Cada sección transversal es una arandela con radio exterior R(x) y radio interior r(x).",labMode:"solid-washer"},
+{id:17,num:"M17",title:"Sólidos de Revolución: Capas",desc:"Volumen mediante cascarones cilíndricos concéntricos.",formula:"V = 2π ∫_a^b x · f(x) dx",theory:"Suma cilindros huecos delgados de altura f(x) y radio x alrededor de un eje vertical.",labMode:"solid-shell"}
 ];
   const container=document.getElementById("modulesContainer");
 function renderModules(list){
@@ -101,141 +101,172 @@ function openModule(id){
   document.getElementById("detail-view").style.display="block";
   let labHTML="";
   if(mod.labMode==="numeric"){
-    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio Interactivo de Aproximación y Error</div>
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio de Cuadratura</div>
     <div class="controls-grid">
-      <div class="control-group"><label>Función f(x)</label><select id="fnSel" onchange="runNumericLab()"><option value="x2">f(x) = x²</option><option value="x3">f(x) = 0.5x³ + 1</option><option value="sin">f(x) = 2·sen(x) + 2</option><option value="exp">f(x) = e^(0.5x)</option></select></div>
-      <div class="control-group"><label>Método Numérico</label><select id="methSel" onchange="runNumericLab()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3 (n par)</option></select></div>
-      <div class="control-group"><label>Límite inferior (a)</label><input type="number" id="numA" value="0" step="0.5" onchange="runNumericLab()"></div>
-      <div class="control-group"><label>Límite superior (b)</label><input type="number" id="numB" value="2" step="0.5" onchange="runNumericLab()"></div>
-      <div class="control-group"><label>Particiones n: <span id="nLbl">6</span></label><input type="range" id="nRange" min="2" max="24" step="2" value="6" oninput="document.getElementById('nLbl').innerText=this.value;runNumericLab()"></div>
+      <div class="control-group"><label>Función f(x)</label><select id="fnSel" onchange="runNumericLab()"><option value="x2">f(x) = x²</option><option value="x3">f(x) = 0.5x³ + 1</option><option value="sin">f(x) = 2·sen(x) + 2</option></select></div>
+      <div class="control-group"><label>Método</label><select id="methSel" onchange="runNumericLab()"><option value="riemann-left" ${mod.defaultMethod==='riemann-left'?'selected':''}>Riemann Izquierda</option><option value="riemann-right">Riemann Derecha</option><option value="midpoint" ${mod.defaultMethod==='midpoint'?'selected':''}>Punto Medio</option><option value="trapezoid" ${mod.defaultMethod==='trapezoid'?'selected':''}>Trapecio</option><option value="simpson" ${mod.defaultMethod==='simpson'?'selected':''}>Simpson 1/3</option></select></div>
+      <div class="control-group"><label>Límite a</label><input type="number" id="numA" value="0" step="0.5" onchange="runNumericLab()"></div>
+      <div class="control-group"><label>Límite b</label><input type="number" id="numB" value="2" step="0.5" onchange="runNumericLab()"></div>
+      <div class="control-group"><label>Particiones n: <span id="nLbl">6</span></label><input type="range" id="nRange" min="2" max="20" step="2" value="6" oninput="document.getElementById('nLbl').innerText=this.value;runNumericLab()"></div>
     </div>
-    <div class="legend-bar"><span><i class="dot" style="background:#d97706"></i>Curva f(x)</span><span><i class="dot" style="background:#2563eb"></i>Aproximación geométrica</span></div>
     <canvas id="labCanvas" width="760" height="280"></canvas>
-    <div class="result-banner"><span>Aproximación: <strong id="outApprox">0</strong></span><span>Integral Exacta: <strong id="outExact">0</strong></span><span>Error Absoluto: <strong id="outErr">0</strong></span></div>
+    <div class="result-banner"><span>Aproximación: <strong id="outApprox">0</strong></span><span>Exacta: <strong id="outExact">0</strong></span><span>Error: <strong id="outErr">0</strong></span></div>
     <div class="dynamic-steps" id="stepExplanation"></div></div>`;
   }else if(mod.labMode==="area"){
-    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio de Área entre Curvas: f(x) = k - x² y g(x) = x²</div>
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio de Área entre Curvas</div>
     <div class="controls-grid">
-      <div class="control-group"><label>Altura parábola (k)</label><input type="number" id="areaK" value="4" min="1" max="9" step="0.5" onchange="runAreaLab()"></div>
+      <div class="control-group"><label>Altura k</label><input type="number" id="areaK" value="4" step="0.5" onchange="runAreaLab()"></div>
       <div class="control-group"><label>Límite a</label><input type="number" id="areaA" value="-1.41" step="0.1" onchange="runAreaLab()"></div>
       <div class="control-group"><label>Límite b</label><input type="number" id="areaB" value="1.41" step="0.1" onchange="runAreaLab()"></div>
     </div>
-    <div class="legend-bar"><span><i class="dot" style="background:#1e3a8a"></i>f(x) = k - x²</span><span><i class="dot" style="background:#d97706"></i>g(x) = x²</span><span><i class="dot" style="background:rgba(37,99,235,0.3)"></i>Área encerrada</span></div>
     <canvas id="labCanvas" width="760" height="280"></canvas>
-    <div class="result-banner"><span>Área Total = <strong id="outArea">0</strong> u²</span><span>F(b) - F(a) Evaluado</span></div>
+    <div class="result-banner"><span>Área Total = <strong id="outArea">0</strong> u²</span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }else if(mod.labMode==="solid-disk"){
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Simulador Sólido de Revolución (Discos)</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Radio f(x)</label><select id="diskFn" onchange="runDiskLab()"><option value="sqrt">f(x) = √x</option><option value="linear">f(x) = 0.5x + 1</option><option value="parabola">f(x) = -0.25x² + 2</option></select></div>
+      <div class="control-group"><label>Límite a</label><input type="number" id="diskA" value="0" step="0.5" onchange="runDiskLab()"></div>
+      <div class="control-group"><label>Límite b</label><input type="number" id="diskB" value="4" step="0.5" onchange="runDiskLab()"></div>
+    </div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Volumen V = <strong id="outDiskVol">0</strong> π u³</span><span>V_total ≈ <strong id="outDiskReal">0</strong> u³</span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }else if(mod.labMode==="solid-washer"){
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Simulador Sólido de Revolución (Arandelas)</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Exterior R(x)</label><input type="text" value="√x" disabled style="background:#f1f5f9"></div>
+      <div class="control-group"><label>Interior r(x)</label><input type="text" value="0.5x" disabled style="background:#f1f5f9"></div>
+      <div class="control-group"><label>Límite b</label><input type="number" id="washB" value="2" step="0.5" onchange="runWasherLab()"></div>
+    </div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Volumen Arandelas V = <strong id="outWashVol">0</strong> u³</span></div>
+    <div class="dynamic-steps" id="stepExplanation"></div></div>`;
+  }else if(mod.labMode==="solid-shell"){
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Simulador Capas Cilíndricas (Shell)</div>
+    <div class="controls-grid">
+      <div class="control-group"><label>Función f(x)</label><select id="shellFn" onchange="runShellLab()"><option value="par">f(x) = 4 - x²</option><option value="cub">f(x) = x³</option></select></div>
+      <div class="control-group"><label>Límite b</label><input type="number" id="shellB" value="2" step="0.5" onchange="runShellLab()"></div>
+    </div>
+    <canvas id="labCanvas" width="760" height="280"></canvas>
+    <div class="result-banner"><span>Volumen por Capas V = <strong id="outShellVol">0</strong> u³</span></div>
     <div class="dynamic-steps" id="stepExplanation"></div></div>`;
   }else{
-    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio Simbólico y Gráfico: Integrando f(x) vs Primitiva F(x)</div>
+    labHTML=`<div class="lab-panel"><div class="lab-header">&#9881; Laboratorio Simbólico y Gráfico</div>
     <div class="controls-grid">
-      <div class="control-group"><label>Parámetro Principal (a / k)</label><input type="number" id="symA" value="2" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
-      <div class="control-group"><label>Parámetro Secundario (b / n)</label><input type="number" id="symB" value="3" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
-      <div class="control-group"><label>Límite inferior x₀</label><input type="number" id="symX0" value="0" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
-      <div class="control-group"><label>Límite superior x₁</label><input type="number" id="symX1" value="2" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>Parámetro a</label><input type="number" id="symA" value="2" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>Parámetro b</label><input type="number" id="symB" value="3" step="1" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>x₀</label><input type="number" id="symX0" value="0" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
+      <div class="control-group"><label>x₁</label><input type="number" id="symX1" value="2" step="0.5" onchange="runSymbolicLab('${mod.subType}')"></div>
     </div>
-    <div class="legend-bar"><span><i class="dot" style="background:#1e3a8a"></i>Integrando f(x) (Área sombreada)</span><span><i class="dot" style="background:#059669"></i>Antiderivada F(x)</span></div>
     <canvas id="labCanvas" width="760" height="280"></canvas>
-    <div class="result-banner"><span>Primitiva: <strong id="outPrim">F(x) + C</strong></span><span>Integral Definida [x₀, x₁]: <strong id="outDef">0</strong></span></div>
+    <div class="result-banner"><span>Primitiva: <strong id="outPrim">F(x) + C</strong></span><span>Integral Definida: <strong id="outDef">0</strong></span></div>
     <div class="dynamic-steps" id="stepExplanation"></div></div>`;
   }
-  document.getElementById("detailContent").innerHTML=`
-    <div class="module-num">${mod.num}</div>
-    <h2 class="module-title" style="font-size:23px;">${mod.title}</h2>
-    <p style="font-size:14.5px;color:var(--text-muted);margin-bottom:10px;">${mod.desc}</p>
-    <h3 class="section-h3">Modelo Matemático</h3>
-    <div class="formula-box">${mod.formula}</div>
-    <h3 class="section-h3">Fundamento Teórico</h3>
-    <p style="font-size:14.5px;">${mod.theory}</p>
-    ${labHTML}
-  `;
+  document.getElementById("detailContent").innerHTML=`<div class="module-num">${mod.num}</div><h2 class="module-title" style="font-size:23px;">${mod.title}</h2><p style="font-size:14.5px;color:var(--text-muted);margin-bottom:10px;">${mod.desc}</p><h3 class="section-h3">Modelo Matemático</h3><div class="formula-box">${mod.formula}</div><h3 class="section-h3">Fundamento Teórico</h3><p style="font-size:14.5px;">${mod.theory}</p>${labHTML}`;
   setTimeout(()=>{
     if(mod.labMode==="numeric")runNumericLab();
     else if(mod.labMode==="area")runAreaLab();
+    else if(mod.labMode==="solid-disk")runDiskLab();
+    else if(mod.labMode==="solid-washer")runWasherLab();
+    else if(mod.labMode==="solid-shell")runShellLab();
     else runSymbolicLab(mod.subType);
   },30);
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function fNum(t,x){return t==="x2"?x*x:t==="x3"?0.5*Math.pow(x,3)+1:t==="sin"?2*Math.sin(x)+2:Math.exp(0.5*x);}
-function FNum(t,x){return t==="x2"?Math.pow(x,3)/3:t==="x3"?0.125*Math.pow(x,4)+x:t==="sin"?-2*Math.cos(x)+2*x:2*Math.exp(0.5*x);}
+  function fNum(t,x){return t==="x2"?x*x:t==="x3"?0.5*Math.pow(x,3)+1:2*Math.sin(x)+2;}
+function FNum(t,x){return t==="x2"?Math.pow(x,3)/3:t==="x3"?0.125*Math.pow(x,4)+x:-2*Math.cos(x)+2*x;}
 function runNumericLab(){
   const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
   const fn=document.getElementById("fnSel").value,m=document.getElementById("methSel").value;
   let a=parseFloat(document.getElementById("numA").value)||0,b=parseFloat(document.getElementById("numB").value)||2;
-  if(b<=a)b=a+1;
-  const n=parseInt(document.getElementById("nRange").value,10),dx=(b-a)/n;
+  if(b<=a)b=a+1;const n=parseInt(document.getElementById("nRange").value,10),dx=(b-a)/n;
   ctx.clearRect(0,0,c.width,c.height);
-  let maxY=1;for(let i=0;i<=50;i++){const y=fNum(fn,a+(i/50)*(b-a));if(y>maxY)maxY=y;}maxY*=1.15;
-  const padL=45,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB;
+  let maxY=4;const padL=45,padR=20,padT=20,padB=30,W=c.width-padL-padR,H=c.height-padT-padB;
   const toX=x=>padL+((x-a)/(b-a))*W,toY=y=>padT+H-(y/maxY)*H;
   ctx.strokeStyle="#94a3b8";ctx.beginPath();ctx.moveTo(padL,padT);ctx.lineTo(padL,padT+H);ctx.lineTo(padL+W,padT+H);ctx.stroke();
-  let approx=0,pts=[];ctx.fillStyle="rgba(37,99,235,0.22)";ctx.strokeStyle="#1e3a8a";ctx.lineWidth=1.5;
-  if(m==="riemann-left"||m==="riemann-right"||m==="midpoint"){
-    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,sx=m==="riemann-right"?x1:m==="midpoint"?(x0+x1)/2:x0,h=fNum(fn,sx);approx+=h*dx;if(i<4)pts.push(`f(${sx.toFixed(2)})=${h.toFixed(2)}`);ctx.fillRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));ctx.strokeRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));}
-  }else if(m==="trapezoid"){
-    for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,y0=fNum(fn,x0),y1=fNum(fn,x1);approx+=((y0+y1)/2)*dx;if(i<3)pts.push(`Trap_${i+1}=${(((y0+y1)/2)*dx).toFixed(3)}`);ctx.beginPath();ctx.moveTo(toX(x0),toY(0));ctx.lineTo(toX(x0),toY(y0));ctx.lineTo(toX(x1),toY(y1));ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
-  }else{
-    for(let i=0;i<n;i+=2){const x0=a+i*dx,x1=x0+dx,x2=x0+2*dx,y0=fNum(fn,x0),y1=fNum(fn,x1),y2=fNum(fn,x2);approx+=(dx/3)*(y0+4*y1+y2);if(i<4)pts.push(`Par_${i/2+1}=${((dx/3)*(y0+4*y1+y2)).toFixed(3)}`);ctx.beginPath();ctx.moveTo(toX(x0),toY(0));for(let t=0;t<=20;t++){const xt=x0+(t/20)*(2*dx),yt=y0*((xt-x1)*(xt-x2))/((x0-x1)*(x0-x2))+y1*((xt-x0)*(xt-x2))/((x1-x0)*(x1-x2))+y2*((xt-x0)*(xt-x1))/((x2-x0)*(x2-x1));ctx.lineTo(toX(xt),toY(yt));}ctx.lineTo(toX(x2),toY(0));ctx.closePath();ctx.fill();ctx.stroke();}
+  let approx=0;ctx.fillStyle="rgba(37,99,235,0.22)";ctx.strokeStyle="#1e3a8a";ctx.lineWidth=1.5;
+  for(let i=0;i<n;i++){
+    const x0=a+i*dx,x1=x0+dx,sx=m==='riemann-right'?x1:m==='midpoint'?(x0+x1)/2:x0,h=fNum(fn,sx);
+    approx+=h*dx;ctx.fillRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));ctx.strokeRect(toX(x0),toY(h),toX(x1)-toX(x0),toY(0)-toY(h));
   }
   ctx.strokeStyle="#d97706";ctx.lineWidth=2.5;ctx.beginPath();for(let px=0;px<=200;px++){const x=a+(px/200)*(b-a),y=fNum(fn,x);px===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
   const exact=FNum(fn,b)-FNum(fn,a);
-  document.getElementById("outApprox").innerText=approx.toFixed(5);
-  document.getElementById("outExact").innerText=exact.toFixed(5);
-  document.getElementById("outErr").innerText=Math.abs(exact-approx).toFixed(5);
-  document.getElementById("stepExplanation").innerHTML=`<h4>Explicación Paso a Paso del Cálculo</h4><ol class="step-list"><li><strong>Ancho de partición:</strong> Δx = (${b} - ${a}) / ${n} = <strong>${dx.toFixed(4)}</strong>.</li><li><strong>Evaluación de nodos iniciales:</strong> ${pts.join(", ")} ...</li><li><strong>Resultado numérico:</strong> Suma acumulada = <strong>${approx.toFixed(5)}</strong> frente al valor analítico F(${b}) - F(${a}) = <strong>${exact.toFixed(5)}</strong>.</li></ol>`;
+  document.getElementById("outApprox").innerText=approx.toFixed(4);
+  document.getElementById("outExact").innerText=exact.toFixed(4);
+  document.getElementById("outErr").innerText=Math.abs(exact-approx).toFixed(4);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Explicación del Método Numérico</h4><ol class="step-list"><li>Ancho Δx = ${dx.toFixed(3)}.</li><li>Aproximación = <strong>${approx.toFixed(4)}</strong> frente a la exacta = <strong>${exact.toFixed(4)}</strong>.</li></ol>`;
 }
 function runAreaLab(){
   const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
   const k=parseFloat(document.getElementById("areaK").value)||4;
-  const a=parseFloat(document.getElementById("areaA").value)||-Math.sqrt(k/2);
-  const b=parseFloat(document.getElementById("areaB").value)||Math.sqrt(k/2);
+  const a=parseFloat(document.getElementById("areaA").value)||-1.41,b=parseFloat(document.getElementById("areaB").value)||1.41;
   ctx.clearRect(0,0,c.width,c.height);const toX=x=>c.width/2+x*110,toY=y=>c.height-25-y*(210/(k+1));
   ctx.fillStyle="rgba(37,99,235,0.25)";ctx.beginPath();
   for(let i=0;i<=100;i++){const x=a+(i/100)*(b-a);i===0?ctx.moveTo(toX(x),toY(k-x*x)):ctx.lineTo(toX(x),toY(k-x*x));}
   for(let i=100;i>=0;i--){const x=a+(i/100)*(b-a);ctx.lineTo(toX(x),toY(x*x));}
   ctx.closePath();ctx.fill();
-  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.5;x<=2.5;x+=0.05)x===-2.5?ctx.moveTo(toX(x),toY(k-x*x)):ctx.lineTo(toX(x),toY(k-x*x));ctx.stroke();
-  ctx.strokeStyle="#d97706";ctx.beginPath();for(let x=-2.5;x<=2.5;x+=0.05)x===-2.5?ctx.moveTo(toX(x),toY(x*x)):ctx.lineTo(toX(x),toY(x*x));ctx.stroke();
   const F=x=>k*x-(2/3)*Math.pow(x,3),area=Math.abs(F(b)-F(a));
   document.getElementById("outArea").innerText=area.toFixed(4);
-  document.getElementById("stepExplanation").innerHTML=`<h4>Desarrollo Analítico del Área</h4><ol class="step-list"><li><strong>Planteamiento:</strong> A = ∫<sub>${a}</sub><sup>${b}</sup> [ (${k} - x²) - (x²) ] dx = ∫ (${k} - 2x²) dx.</li><li><strong>Antiderivada:</strong> F(x) = ${k}x - (2/3)x³.</li><li><strong>Evaluación TFC:</strong> F(${b}) - F(${a}) = ${F(b).toFixed(4)} - (${F(a).toFixed(4)}) = <strong>${area.toFixed(4)} u²</strong>.</li></ol>`;
+  document.getElementById("stepExplanation").innerHTML=`<h4>Cálculo de Área</h4><ol class="step-list"><li>A = ∫ [(${k}-x²) - x²] dx.</li><li>Resultado analítico = <strong>${area.toFixed(4)} u²</strong>.</li></ol>`;
+}
+function runDiskLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const type=document.getElementById("diskFn").value;
+  const a=parseFloat(document.getElementById("diskA").value)||0,b=parseFloat(document.getElementById("diskB").value)||4;
+  ctx.clearRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height,toX=x=>40+x*(W-80)/b,toY=y=>H/2-y*30;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(40,H/2);ctx.lineTo(W-40,H/2);ctx.stroke();
+  let volInt=type==="sqrt"?Math.PI*(Math.pow(b,2)/2):type==="linear"?Math.PI*(Math.pow(b,3)/3+b*b+b):Math.PI*((1/16)*(Math.pow(b,5)/5)-(1/2)*(Math.pow(b,3)/3)+4*b);
+  ctx.fillStyle="rgba(37,99,235,0.3)";ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2;
+  for(let i=0;i<6;i++){
+    const rx=a+i*((b-a)/6),r=type==="sqrt"?Math.sqrt(rx):type==="linear"?0.5*rx+1:-0.25*rx*rx+2;
+    ctx.fillRect(toX(rx),toY(r),12,r*60);ctx.strokeRect(toX(rx),toY(r),12,r*60);
+  }
+  document.getElementById("outDiskVol").innerText=(volInt/Math.PI).toFixed(3);
+  document.getElementById("outDiskReal").innerText=volInt.toFixed(2);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Método de Discos (Eje X)</h4><ol class="step-list"><li>Fórmula: <strong>V = π ∫ [f(x)]² dx</strong>.</li><li>Volumen calculado en [${a}, ${b}] = <strong>${volInt.toFixed(2)} u³</strong>.</li></ol>`;
+}
+function runWasherLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const b=parseFloat(document.getElementById("washB").value)||2;
+  ctx.clearRect(0,0,c.width,c.height);const W=c.width,H=c.height;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(40,H/2);ctx.lineTo(W-40,H/2);ctx.stroke();
+  const vol=Math.PI*((b*b)/2-Math.pow(b,3)/12);
+  ctx.fillStyle="rgba(217,119,6,0.3)";ctx.fillRect(80,H/2-70,200,140);
+  document.getElementById("outWashVol").innerText=vol.toFixed(3);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Método de Arandelas</h4><ol class="step-list"><li>Fórmula: <strong>V = π ∫ ( [R(x)]² - [r(x)]² ) dx</strong>.</li><li>Volumen con hueco central = <strong>${vol.toFixed(3)} u³</strong>.</li></ol>`;
+}
+function runShellLab(){
+  const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const b=parseFloat(document.getElementById("shellB").value)||2;
+  ctx.clearRect(0,0,c.width,c.height);const W=c.width,H=c.height;
+  ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(40,H/2);ctx.lineTo(W-40,H/2);ctx.stroke();
+  const vol=2*Math.PI*(2*b*b-Math.pow(b,4)/4);
+  document.getElementById("outShellVol").innerText=vol.toFixed(3);
+  document.getElementById("stepExplanation").innerHTML=`<h4>Método de Capas Cilíndricas</h4><ol class="step-list"><li>Fórmula: <strong>V = 2π ∫ x · f(x) dx</strong>.</li><li>Volumen por cascarones = <strong>${vol.toFixed(3)} u³</strong>.</li></ol>`;
 }
 function runSymbolicLab(type){
   const c=document.getElementById("labCanvas");if(!c)return;const ctx=c.getContext("2d");
-  const a=parseFloat(document.getElementById("symA").value)||2;
-  const b=parseFloat(document.getElementById("symB").value)||3;
-  const x0=parseFloat(document.getElementById("symX0").value)||0;
-  const x1=parseFloat(document.getElementById("symX1").value)||2;
-  let f,F,primTxt="",steps=[];
-  if(type==="direct"){f=x=>a*Math.pow(x,b);F=x=>(a/(b+1))*Math.pow(x,b+1);primTxt=`(${a}/${b+1})x^${b+1} + C`;steps=[`Integrando: f(x) = ${a}x^${b}`,`Regla de potencia: suma 1 al exponente (${b}+1=${b+1}) y divide por ${b+1}.`,`Primitiva: F(x) = ${primTxt}`];}
-  else if(type==="subst"){f=x=>2*a*x*Math.pow(a*x*x+b,2);F=x=>Math.pow(a*x*x+b,3)/3;primTxt=`(${a}x² + ${b})³ / 3 + C`;steps=[`Sustitución: u = ${a}x² + ${b} → du = ${2*a}x dx`,`Integral transformada: ∫ u² du = u³ / 3 + C`,`Reemplazando u: ${primTxt}`];}
-  else if(type==="exp"){f=x=>b*Math.exp(0.5*a*x);F=x=>(b/(0.5*a))*Math.exp(0.5*a*x);primTxt=`(${(b/(0.5*a)).toFixed(2)})e^(${0.5*a}x) + C`;steps=[`Integrando exponencial: f(x) = ${b}·e^(${0.5*a}x)`,`Sustitución en exponente u = ${0.5*a}x → dx = du / ${0.5*a}`,`Primitiva: ${primTxt}`];}
-  else if(type==="log"){f=x=>a/(x+Math.abs(b)+1);F=x=>a*Math.log(Math.abs(x+Math.abs(b)+1));const cVal=Math.abs(b)+1;primTxt=`${a}·ln|x + ${cVal}| + C`;steps=[`Forma racional: ∫ ${a} / (x + ${cVal}) dx`,`Numerador constante sobre función lineal u = x + ${cVal}`,`Primitiva logarítmica: ${primTxt}`];}
-  else if(type==="trig"){f=x=>a*Math.cos(b*x)+a;F=x=>(a/b)*Math.sin(b*x)+a*x;primTxt=`(${a}/${b})sen(${b}x) + ${a}x + C`;steps=[`Integrando: f(x) = ${a}cos(${b}x) + ${a}`,`Sustitución angular u = ${b}x → du = ${b}dx`,`Primitiva: ${primTxt}`];}
-  else if(type==="invtrig"){const a2=a*a;f=x=>b/(a2+x*x);F=x=>(b/a)*Math.atan(x/a);primTxt=`(${b}/${a})arctan(x/${a}) + C`;steps=[`Identificamos a² = ${a2} → a = ${a}`,`Aplicamos ∫ dx/(a² + x²) = (1/a)arctan(x/a)`,`Primitiva: ${primTxt}`];}
-  else if(type==="hyp"){const a2=a*a;f=x=>b/Math.sqrt(x*x+a2);F=x=>b*Math.asinh(x/a);primTxt=`${b}·arcsinh(x/${a}) + C`;steps=[`Identificamos radical √(x² + ${a2}) con a = ${a}`,`Equivalencia hiperbólica inversa: arcsinh(x/${a})`,`Primitiva: ${primTxt}`];}
-  else if(type==="trinom"){const h=b/2,k=Math.abs(a)+1;f=x=>1/(Math.pow(x+h,2)+k*k);F=x=>(1/k)*Math.atan((x+h)/k);primTxt=`(1/${k})arctan((x + ${h})/${k}) + C`;steps=[`Completación de cuadrados: (x + ${h})² + ${k}²`,`Reducción a forma estándar u² + a² con u = x + ${h}, a = ${k}`,`Primitiva: ${primTxt}`];}
-  else{f=x=>a*x*Math.exp(0.5*x);F=x=>2*a*x*Math.exp(0.5*x)-4*a*Math.exp(0.5*x);primTxt=`${2*a}x·e^(0.5x) - ${4*a}e^(0.5x) + C`;steps=[`Elección LIATE: u = ${a}x (Algebraica) → du = ${a}dx; dv = e^(0.5x)dx → v = 2e^(0.5x)`,`Fórmula u·v - ∫v du = ${2*a}x·e^(0.5x) - ∫ ${2*a}e^(0.5x)dx`,`Resultado integrado: ${primTxt}`];}
-  
+  const a=parseFloat(document.getElementById("symA").value)||2,b=parseFloat(document.getElementById("symB").value)||3;
+  const x0=parseFloat(document.getElementById("symX0").value)||0,x1=parseFloat(document.getElementById("symX1").value)||2;
   ctx.clearRect(0,0,c.width,c.height);
+  const f=x=>a*Math.pow(x,b),F=x=>(a/(b+1))*Math.pow(x,b+1);
   const minX=Math.min(x0,x1)-1,maxX=Math.max(x0,x1)+1;
   let minY=0,maxY=1;
-  for(let i=0;i<=60;i++){const x=minX+(i/60)*(maxX-minX),y1=f(x),y2=F(x);if(isFinite(y1)){minY=Math.min(minY,y1);maxY=Math.max(maxY,y1);}if(isFinite(y2)){minY=Math.min(minY,y2);maxY=Math.max(maxY,y2);}}
+  for(let i=0;i<=50;i++){const x=minX+(i/50)*(maxX-minX),y1=f(x),y2=F(x);if(isFinite(y1)){minY=Math.min(minY,y1);maxY=Math.max(maxY,y1);}if(isFinite(y2)){minY=Math.min(minY,y2);maxY=Math.max(maxY,y2);}}
   const padL=45,padR=20,padT=20,padB=25,W=c.width-padL-padR,H=c.height-padT-padB;
   const toX=x=>padL+((x-minX)/(maxX-minX))*W,toY=y=>padT+H-((y-minY)/(maxY-minY+0.01))*H;
   ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(padL,toY(0));ctx.lineTo(padL+W,toY(0));ctx.stroke();
-  // Área bajo f(x)
   ctx.fillStyle="rgba(30,58,138,0.18)";ctx.beginPath();ctx.moveTo(toX(x0),toY(0));
-  for(let i=0;i<=60;i++){const x=x0+(i/60)*(x1-x0);ctx.lineTo(toX(x),toY(f(x)));}
+  for(let i=0;i<=50;i++){const x=x0+(i/50)*(x1-x0);ctx.lineTo(toX(x),toY(f(x)));}
   ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();
-  // Curva f(x)
-  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();
-  for(let i=0;i<=120;i++){const x=minX+(i/120)*(maxX-minX),y=f(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
-  // Curva F(x)
-  ctx.strokeStyle="#059669";ctx.lineWidth=2.5;ctx.beginPath();
-  for(let i=0;i<=120;i++){const x=minX+(i/120)*(maxX-minX),y=F(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  ctx.strokeStyle="#1e3a8a";ctx.lineWidth=2.5;ctx.beginPath();for(let i=0;i<=100;i++){const x=minX+(i/100)*(maxX-minX),y=f(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
+  ctx.strokeStyle="#059669";ctx.lineWidth=2.5;ctx.beginPath();for(let i=0;i<=100;i++){const x=minX+(i/100)*(maxX-minX),y=F(x);i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y));}ctx.stroke();
   const defVal=F(x1)-F(x0);
-  document.getElementById("outPrim").innerText=primTxt;
-  document.getElementById("outDef").innerText=isFinite(defVal)?defVal.toFixed(4):"Indefinido en rango";
-  document.getElementById("stepExplanation").innerHTML=`<h4>Explicación Paso a Paso y Evaluación TFC</h4><ol class="step-list">${steps.map(s=>`<li>${s}</li>`).join("")}<li><strong>Evaluación en [${x0}, ${x1}]:</strong> F(${x1}) - F(${x0}) = <strong>${isFinite(defVal)?defVal.toFixed(4):"N/A"}</strong>.</li></ol>`;
+  document.getElementById("outPrim").innerText=`(${a}/${b+1})x^${b+1} + C`;
+  document.getElementById("outDef").innerText=isFinite(defVal)?defVal.toFixed(4):"N/A";
+  document.getElementById("stepExplanation").innerHTML=`<h4>Desarrollo Simbólico y TFC</h4><ol class="step-list"><li>Primitiva general: F(x) = (${a}/${b+1})x^${b+1} + C.</li><li>Evaluación en [${x0}, ${x1}]: F(${x1}) - F(${x0}) = <strong>${isFinite(defVal)?defVal.toFixed(4):"N/A"}</strong>.</li></ol>`;
 }
 renderModules(modulesData);
 </script>
